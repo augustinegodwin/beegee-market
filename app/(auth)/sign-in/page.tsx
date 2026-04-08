@@ -1,0 +1,110 @@
+"use client"
+import AuthButton from "@/app/components/utils/authButton";
+import Input from "@/app/components/utils/input";
+import Image from "next/image"
+import Link from "next/link"
+import logo from "@/app/assets/images/bot.png"
+import useFetch from "@/app/lib/useAsyncFetch";
+import { useState } from "react";
+import axiosInstance from "@/app/lib/axios";
+import { useAuthStore } from "@/app/store/auth.store";
+export default function Page() {
+    const [phoneNumber, setPhoneNumber] = useState("");
+    const [password, setPassword] = useState("");
+    const [isLoading, setIsLoading] = useState(false);
+    const { saveCookie } = useAuthStore.getState();
+    const loginUser = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setIsLoading(true);
+    if (phoneNumber.startsWith('0')) {
+    setPhoneNumber('+234' + phoneNumber.slice(1));
+  }
+  
+  // Optional: if user already typed +234
+  if (phoneNumber.startsWith('+2340')) {
+    setPhoneNumber('+234' + phoneNumber.slice(5));
+  }
+  try {
+    const user = await axiosInstance.post(`/v1/auth/login`, {
+      phoneNumber,
+      password,
+      // matricNumber:matric.toLowerCase()
+    });
+    const data = await user.data;
+    if (data.refreshTokenJWT && data.accessTokenJWT) {
+      saveCookie("RFTFL", data.accessTokenJWT);
+      saveCookie("ACTFL", data.refreshTokenJWT);
+    }
+    console.log(data);
+  } catch (error) {
+    console.log(error); 
+  }finally {
+    setIsLoading(false);
+  }
+};
+  return (
+    <div className="w-full min-h-screen py-25 px-4 flex justify-center items-center">
+      <div className="w-full max-w-100 bg-(--card) rounded-[30px] h-auto border border-gray-100 p-1.5">
+       <div className="w-full h-auto flex flex-col items-center bg-[#fcfcfc] border border-gray-100 rounded-3xl py-5">
+             <div className=" size-15 rounded-full border border-gray-100 z-10 bg-white -top-7.5">
+                  <Link href={'/'} className="flex size-full">
+                    <Image
+                    className="size-full"
+                    alt="logo"
+                    src={logo}
+                />
+                </Link>
+             </div>
+            <div className="w-full flex justify-center pt-5 flex-col items-center px-5 gap-3">
+                <h3 className=' title-font text-(--primary) text-2xl tracking-body leading-5'>Welcome back</h3>
+                <p className="leading-body text-center title-font track-body font-medium text-(--secondary)">Enter your credentials to log in.</p>
+                <form className="w-full flex-col flex gap-4" onSubmit={loginUser}>
+                    <div className="w-full flex flex-col gap-1">
+                        <label className="text-sm title-font tracking-body text-black font-medium ">Phone Number</label>
+                        <input
+                            type={"tel"}
+                            placeholder="08123456789"
+                            className='w-full bg-(--card) title-font text-black border-gray-200 border h-10 leading-body tracking-body rounded-xl px-3'
+                            value={phoneNumber}
+                            onChange={(e) => setPhoneNumber(e.target.value)}
+                        />
+                    </div>
+                    <div className="w-full flex flex-col gap-1">
+                        <label className="text-sm title-font tracking-body text-black font-medium ">Password</label>
+                        <input
+                            type="password"
+                            placeholder="••••••••"
+                            className='w-full bg-(--card) title-font text-black border-gray-200 border h-10 leading-body tracking-body rounded-xl px-3'
+                            value={password}
+                            onChange={(e) => setPassword(e.target.value)}
+                        />
+                    </div>
+                    <button disabled={isLoading} className="w-full flex gap-2 justify-center items-center px-5 h-10 title-font hover:bg-(--green) disabled:bg-(--green)  bg-green-600 transition-all rounded-xl font-medium leading-[1.1] tracking-body text-sm text-white ">
+
+{isLoading ? "" : "Sign In"}
+      {isLoading &&<div className="flex items-center justify-center space-x-1">
+  <div
+    className="w-2 h-2 bg-white rounded-full animate-pulse"
+    style={{ animationDelay: "0s" }}
+  />
+  <div
+    className="w-2 h-2 bg-white rounded-full animate-pulse"
+    style={{ animationDelay: "0.2s" }}
+  />
+  <div
+    className="w-2 h-2 bg-white rounded-full animate-pulse"
+    style={{ animationDelay: "0.4s" }}
+  />
+</div>}
+
+    </button>
+                </form>
+            </div>
+        </div>
+        <div className="py-3 flex justify-center">
+            <p className="leading-body text-sm title-font track-body font-medium text-(--secondary)">Don't have an account? <Link href={"/sign-up"} className="link-style">Sign up</Link>.</p>
+        </div>
+      </div>
+    </div>
+  );
+}
