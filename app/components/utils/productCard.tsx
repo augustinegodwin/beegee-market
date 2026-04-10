@@ -37,15 +37,15 @@ export default function ProductCard( product:Product) {
         </div>
         <div className="flex gap-2">
           {product.availabilityStatus ? (
-            <button className="w-full px-5 py-2 title-font2 bg-black transition-all rounded-lg font-medium leading-[1.1] tracking-body text-sm text-white ">
+            <button className="w-full cursor-pointer px-5 py-2 title-font2 bg-black transition-all rounded-lg font-medium leading-[1.1] tracking-body text-sm text-white ">
               {product.forSale ? "Purchase" : "Rent"}
             </button>
           ) : (
-            <button className="w-full px-5 py-2 title-font2 bg-(--green) transition-all rounded-lg font-medium leading-[1.1] tracking-body text-sm text-white ">
+            <button className="w-full cursor-pointer px-5 py-2 title-font2 bg-(--green) transition-all rounded-lg font-medium leading-[1.1] tracking-body text-sm text-white ">
               {product.forSale ? "Purchase" : "Rent"}
             </button>
           )}
-           <button className="w-full px-5 py-2 title-font2 bg-(--card) border-2 border-gray-200 transition-all rounded-lg font-medium leading-[1.1] tracking-body text-sm text-black " onClick={()=>setSelectedProduct(product)}>
+           <button className="w-full cursor-pointer px-5 py-2 title-font2 bg-(--card) border-2 border-gray-200 transition-all rounded-lg font-medium leading-[1.1] tracking-body text-sm text-black " onClick={()=>setSelectedProduct(product)}>
               View
             </button>
         </div>

@@ -1,34 +1,77 @@
 "use client";
-import { Fragment, useState } from "react";
+import { Fragment, useEffect, useState } from "react";
 import { Dialog, Transition } from "@headlessui/react";
 import cancel from '@/app/assets/images/cancel.svg';
 import bootle from '@/app/assets/images/bottle.jpg';
 import { Minus, Plus, X } from "lucide-react";
 import Image from 'next/image';
 import { useProductStore } from "@/app/store/products.store";
+import { redirect, useRouter } from "next/navigation";
+import { useAuthStore } from "@/app/store/auth.store";
+import { sign } from "crypto";
 
 interface ProductModalProps {
   isOpen: boolean;
-  onClose: () => void;
-  product: {
-    id: string;
-    name: string;
-    price: number;
-    originalPrice?: number;
-    rating: number;
-    reviews: number;
-    image: string;
-    description: string;
-    details: string[];
-    inStock: boolean;
-  };
+  onClose: () => void
 }
 
-export function ProductModal({ isOpen, onClose, product }: ProductModalProps) {
+export function ProductModal({ isOpen, onClose }: ProductModalProps) {
   const [quantity, setQuantity] = useState(1);
-  const { setSelectedProduct,selectedProduct } = useProductStore();
+  
+  const { setSelectedProduct,selectedProduct,addToCart,clearCart } = useProductStore();
   const selected=selectedProduct?.title ? true:false
-  const close=()=>setSelectedProduct(null)
+  const close=()=>{
+    clearCart()
+    setSelectedProduct(null)
+    setQuantity(1)
+  }
+  const [total,setTotal]=useState(0)
+  useEffect(()=>{
+      setTotal(quantity * Number(selectedProduct?.price || 0))
+  },[selectedProduct,quantity])
+  const {user,getCookie}=useAuthStore()
+  const rfToken=getCookie("RFTFL")
+  const acToken=getCookie("ACTFL")
+  const signedCookies1={
+    "accessToken":acToken,
+    "refreshToken":rfToken
+  }
+  const signedCookies=JSON.stringify(signedCookies1)
+  function getExpectedReturnTime(rentHours:number) {
+  const now = new Date();
+
+  // Add rent hours + 1 hour saving grace
+  return new Date(
+    now.getTime() + (rentHours + 1) * 60 * 60 * 1000
+  );
+
+}
+  const router=useRouter()
+  // const makePayment =(subtotal, phoneNumber, name, orderData,email)=>{
+
+  // }
+  // const preparePayment=()=>{
+  //   const orderdata={
+  //   signedCookies,
+  //   item:selectedProduct?._id,
+  //   user:user?.user._id,
+  //   phoneNumber: user?.user.phoneNumber,
+  //       name: user?.user.name,
+  //       address: user?.user.address,
+  //       appartment: user?.user.appartment,
+  //       rentHours:quantity,
+  //       pricePerHour:selectedProduct?.price,
+  //       subtotal:total,
+  //       expectedReturnTime: getExpectedReturnTime(quantity),
+  // }
+  // makePayment(
+  //     orderdata.subtotal,
+  //     orderdata.phoneNumber,
+  //     orderdata.name,
+  //     orderdata,
+  //     // email
+  //   );
+  // }
   if (selectedProduct) return (
     <Transition show={selected} as={Fragment}>
       <Dialog as="div" className="relative z-50" onClose={close}>
@@ -119,11 +162,11 @@ export function ProductModal({ isOpen, onClose, product }: ProductModalProps) {
                         </span>
                         <div className="flex items-baseline gap-4">
                           <span className="title-font text-4xl title-font2 text-black">
-                            N10,500
+                            N{total}
                           </span>
-                          {product.originalPrice && (
-                            <span className="text-lg title-font2 title-font text-(--warning) line-through">
-                              N15,000
+                          {!selectedProduct.forSale && (
+                            <span className="text-lg title-font2 title-font text-(--secondary)">
+                              {selectedProduct.price} Per Hour
                             </span>
                           )}
                         </div>
@@ -131,7 +174,7 @@ export function ProductModal({ isOpen, onClose, product }: ProductModalProps) {
 
                       <div>
                         <p className="text-sm title-font font-medium text-(--secondary) mb-3">
-                          Quantity
+                          {selectedProduct.forSale ?"Quantity":"Hours"}
                         </p>
                         <div className="flex items-center gap-4">
                           <div className="flex items-center border border-gray-100 rounded-lg">
@@ -151,21 +194,29 @@ export function ProductModal({ isOpen, onClose, product }: ProductModalProps) {
                               <Plus className="w-4 h-4 text-black" />
                             </button>
                           </div>
-                          <span className="text-sm title-font2 text-(--success)">
-                            {product.inStock ? "Available" : "Out of Stock"}
+                          <span className={`text-sm title-font2  font-medium ${selectedProduct.availabilityStatus ? "text-(--success)" : "text-(--warning)"}`}>
+                            {selectedProduct.availabilityStatus ? "Available" : "Out of Stock"}
                           </span>
                         </div>
                       </div>
 
                       <div className="border-t border-border flex flex-row gap-3">
                         <button
-                          disabled={!product.inStock}
-                          className="w-full bg-green-600 py-3 rounded-lg tracking-body leading-body title-font2 font-medium hover:bg-(--green) transition-opacity disabled:opacity-50 disabled:cursor-not-allowed"
+                          disabled={!selectedProduct.availabilityStatus}
+                          onClick={()=>{
+                            router.push("/checkout")
+                            addToCart(selectedProduct,quantity)
+                          }}
+                          className="w-full bg-green-600 py-3 cursor-pointer rounded-lg tracking-body leading-body title-font2 font-medium hover:bg-(--green) transition-opacity disabled:opacity-50 disabled:cursor-not-allowed"
                         >
-                          Buy Now
+                          {selectedProduct.forSale ? "Buy Now" :"Rent Now"}
                         </button>
                         <button
-                          className="w-full text-black bg-gray-200 py-3 rounded-lg tracking-body leading-body title-font2 font-medium transition-opacity "
+                          onClick={()=>{
+                            close()
+                            redirect('/store')
+                          }}
+                          className="w-full text-(--secondary) cursor-pointer bg-(--card) py-3 rounded-lg tracking-body leading-body title-font2 font-medium transition-opacity "
                         >
                           Shop More
                         </button>

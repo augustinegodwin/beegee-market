@@ -8,18 +8,30 @@ import useFetch from "@/app/lib/useAsyncFetch";
 import { useState } from "react";
 import axiosInstance from "@/app/lib/axios";
 import { useAuthStore } from "@/app/store/auth.store";
+import { useRouter } from "next/navigation";
+import { NetworkErrorModal } from "@/app/components/headlessUiComponents/networkErrorModal";
 export default function Page() {
     const [phoneNumber, setPhoneNumber] = useState("");
     const [password, setPassword] = useState("");
     const [isLoading, setIsLoading] = useState(false);
+    const [error,setError] = useState(false);
+    const [erorData,setErrorData] = useState<{errorTitle:string,errorMessage:string}>({
+      errorTitle:"",
+      errorMessage:""
+    });
     const { saveCookie } = useAuthStore.getState();
-    const loginUser = async (e: React.FormEvent) => {
-    e.preventDefault();
+    const router = useRouter();
+    const isStage1Valid = 
+        
+        phoneNumber.trim() !== '' && 
+        password.length >= 8;
+    const loginUser = async () => {
     setIsLoading(true);
     if (phoneNumber.startsWith('0')) {
     setPhoneNumber('+234' + phoneNumber.slice(1));
   }
   
+
   // Optional: if user already typed +234
   if (phoneNumber.startsWith('+2340')) {
     setPhoneNumber('+234' + phoneNumber.slice(5));
@@ -34,14 +46,22 @@ export default function Page() {
     if (data.refreshTokenJWT && data.accessTokenJWT) {
       saveCookie("RFTFL", data.accessTokenJWT);
       saveCookie("ACTFL", data.refreshTokenJWT);
+      router.refresh()
     }
-    console.log(data);
   } catch (error) {
-    console.log(error); 
+    setErrorData({
+    errorTitle: "Sign In Failed",
+    errorMessage: "An unexpected error occurred. Please check your credentials and try again."
+});
+  setError(true)
   }finally {
     setIsLoading(false);
   }
 };
+ const handleSubmit = async ( e: React.FormEvent) => {
+        e.preventDefault();
+        await loginUser();
+    };
   return (
     <div className="w-full min-h-screen py-25 px-4 flex justify-center items-center">
       <div className="w-full max-w-100 bg-(--card) rounded-[30px] h-auto border border-gray-100 p-1.5">
@@ -58,7 +78,7 @@ export default function Page() {
             <div className="w-full flex justify-center pt-5 flex-col items-center px-5 gap-3">
                 <h3 className=' title-font text-(--primary) text-2xl tracking-body leading-5'>Welcome back</h3>
                 <p className="leading-body text-center title-font track-body font-medium text-(--secondary)">Enter your credentials to log in.</p>
-                <form className="w-full flex-col flex gap-4" onSubmit={loginUser}>
+                <form className="w-full flex-col flex gap-4" onSubmit={handleSubmit}>
                     <div className="w-full flex flex-col gap-1">
                         <label className="text-sm title-font tracking-body text-black font-medium ">Phone Number</label>
                         <input
@@ -79,7 +99,7 @@ export default function Page() {
                             onChange={(e) => setPassword(e.target.value)}
                         />
                     </div>
-                    <button disabled={isLoading} className="w-full flex gap-2 justify-center items-center px-5 h-10 title-font hover:bg-(--green) disabled:bg-(--green)  bg-green-600 transition-all rounded-xl font-medium leading-[1.1] tracking-body text-sm text-white ">
+                    <button disabled={isLoading || !isStage1Valid} className="w-full flex gap-2 justify-center items-center px-5 h-10 title-font hover:bg-(--green) disabled:bg-(--green)  bg-green-600 transition-all rounded-xl font-medium leading-[1.1] tracking-body text-sm text-white ">
 
 {isLoading ? "" : "Sign In"}
       {isLoading &&<div className="flex items-center justify-center space-x-1">
@@ -105,6 +125,13 @@ export default function Page() {
             <p className="leading-body text-sm title-font track-body font-medium text-(--secondary)">Don't have an account? <Link href={"/sign-up"} className="link-style">Sign up</Link>.</p>
         </div>
       </div>
+      <NetworkErrorModal
+                    errorTitle={erorData.errorTitle}
+                    errorMessage={erorData.errorMessage}
+                      isOpen={error}
+                      onClose={() => setError(false)}
+                      onRetry={loginUser}
+                  />
     </div>
   );
 }

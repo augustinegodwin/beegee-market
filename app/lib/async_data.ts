@@ -35,7 +35,11 @@ export const getAllProducts = async (searchparam: string) => {
 };
 export const getAllOrders = async () => {
   try {
-    const orders = await axiosInstance.post(`/v1/orders/showAllMyOrders`);
+    const orders = await axiosInstance.post(`/v1/orders/showAllMyOrders`,
+        {
+        signedCookies,
+      }
+    );
     const data = await orders.data;
     if (!data) throw Error;
     return data;
@@ -63,7 +67,20 @@ export const loginUser = async ({
     return   error; 
   }
 };
-
+export const signUp = async (FormData: any) => {
+  for (const [key, value] of FormData.entries()) {
+    console.log(`${key}:`, value);
+  }
+  try {
+    const request = await axiosInstance.post("/v1/auth/register", FormData, {
+      headers: { "Content-Type": "multipart/form-data" },
+    });
+    const response = await request;
+    return response;
+  } catch (error) {
+    return undefined;
+  }
+}
 export const getAuthenticatedUser = async () => {
   try {
     const user = await axiosInstance.post(`/v1/auth`, {
@@ -78,27 +95,31 @@ export const getAuthenticatedUser = async () => {
   }
 };
 
-const signUp = async (FormData: any) => {
+export const createProducts = async (FormData: any) => {
   const refreshToken = 'Cookies.get("RFTFL");';
   const accessToken = 'Cookies.get("ACTFL");';
   const signedCookies = {
     refreshToken,
     accessToken,
   };
-  FormData.append("signedCookies", JSON.stringify(signedCookies));
-  for (const [key, value] of FormData.entries()) {
-    console.log(`${key}:`, value);
-  }
+  // FormData.append("signedCookies", JSON.stringify(signedCookies));
+  console.log("Final Submission:", Object.fromEntries(FormData));
   try {
-    const request = await axiosInstance.post("/products/create", FormData, {
+    const request = await axiosInstance.post("/v1/products/create", FormData, {
       headers: { "Content-Type": "multipart/form-data" },
     });
     const response = await request;
-    console.log(response);
-
-    return response;
+    return response.data;
   } catch (error) {
-    console.log(error);
     return undefined;
+  }
+};
+export const createOrder = async (paymentObj:any) => {
+  try {
+    const request=await axiosInstance.post(`/v1/orders/create`,paymentObj)
+    const response=await request
+    return response
+  } catch (error) {
+    return error    
   }
 };

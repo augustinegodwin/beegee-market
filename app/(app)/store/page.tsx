@@ -14,6 +14,8 @@ import useFetch from "@/app/lib/useAsyncFetch";
 import { getAllProducts } from "@/app/lib/async_data";
 import Spinner from "@/app/components/utils/spinner";
 import NetworkEror from "@/app/components/utils/networkEror";
+import { Plus } from "lucide-react";
+import { UploadProductModal } from "@/app/components/utils/uploadProductsModal";
 const filterItems = [
   {
     title: "All Items",
@@ -40,28 +42,43 @@ const filterItems = [
     active: false,
   },
 ];
-const o={
-    id: '1',
-    name: 'Premium Leather Handbag',
-    price: 189,
-    originalPrice: 249,
-    rating: 4.8,
-    reviews: 127,
-    image: 'https://images.unsplash.com/photo-1548036328-c9fa89d128fa?w=800&q=80',
-    description: 'Crafted from genuine Italian leather, this sophisticated handbag is the perfect companion for any occasion. Its timeless design and superior craftsmanship make it an investment piece.',
-    details: [
-      'Genuine Italian leather construction',
-      'Spacious main compartment with multiple pockets',
-      'Adjustable shoulder strap',
-      'Gold-tone hardware',
-      'Dust bag included'
-    ],
-    inStock: true,
-  }
 
+const ProductSkeleton = () => {
+
+  return (
+    <div 
+      className="w-full flex flex-col gap-4 animate-pulse [mask-image:linear-gradient(to_bottom,white_100%,transparent_100%)]"
+      // Note: 'black' in a mask means 100% visible, 'transparent' means 0% visible.
+    >
+      {/* Image Placeholder */}
+      <div className="w-full overflow-hidden relative aspect-[0.882609/1] bg-gray-200 rounded-2xl" />
+
+      <div className="w-full flex flex-col gap-2.5">
+        {/* Title Placeholder */}
+        <div className="w-full space-y-2">
+          <div className="h-4 bg-gray-200 rounded w-full" />
+          <div className="h-4 bg-gray-200 rounded w-2/3" />
+        </div>
+
+        {/* Status and Price Placeholder */}
+        <div className="flex w-full justify-between items-center">
+          <div className="h-4 bg-gray-200 rounded w-20" />
+          <div className="h-4 bg-gray-200 rounded w-16" />
+        </div>
+
+        {/* Buttons Placeholder */}
+        <div className="flex gap-2">
+          <div className="h-9 w-full bg-black/50 rounded-lg" />
+          <div className="h-9 w-full bg-gray-200 rounded-lg" />
+        </div>
+      </div>
+    </div>
+  );
+};
 export default function Page() {
   const [selectedProduct, setSelectedProduct] = useState<any>(null)
   const [isModalOpen, setIsModalOpen] = useState(false)
+  const [pModal,setPModal]=useState(false)
   const {
     data: products,
     loading,
@@ -72,7 +89,6 @@ export default function Page() {
     params: { searchparam: "" },
   });
   const handleOpenProduct = () => {
-    setSelectedProduct(o)
     setIsModalOpen(true)
   }
   const mainpoducts:Product[] | null =products?.products
@@ -111,7 +127,12 @@ export default function Page() {
               </div>
               <div className="w-fit hidden lg:flex flex-row gap-3 lg:gap-4">
                 {filterItems.map((item) => (
-                  <FilterCard title={item.title} key={item.title} active={item.active} />
+                  item.active ?<button className=' bg-(--primary) cursor-pointer whitespace-nowrap text-white rounded-xl px-5 py-1 title-font tracking-header'>
+                      {item.title}
+                  </button>:
+                  <button className='border border-gray-100 cursor-pointer whitespace-nowrap text-(--secondary) rounded-xl px-5 py-1 title-font tracking-header'>
+                      {item.title}
+                  </button>
                 ))}
               </div>
             </div>
@@ -120,8 +141,10 @@ export default function Page() {
             </div>
           </div>
           {
-            loading && (<div className="w-full h-[20vh] flex items-center justify-center">
-                    <Spinner />
+            loading && (<div className="w-full grid grid-cols-2 lg:grid-cols-4 gap-4">
+                    {Array(16).fill(null).map((_, index) => (
+                      <ProductSkeleton key={index} />
+                    ))}
                   </div>) 
 
           }
@@ -150,9 +173,19 @@ export default function Page() {
       <ProductModal
           isOpen={isModalOpen}
           onClose={() => setIsModalOpen(false)}
-          product={o}
         />
         <CookieBanner/>
+        <button
+      onClick={() => setPModal(true)}
+      className="fixed bottom-8 right-4 cursor-pointer sm:right-8 z-50 flex items-center justify-center size-14 bg-black text-white rounded-full shadow-lg shadow-black/20 hover:scale-110 active:scale-95 transition-all duration-200 group"
+      aria-label="Add Item"
+    >
+      <Plus 
+        size={28} 
+        className="transition-transform group-hover:rotate-90 duration-300" 
+      />
+      <UploadProductModal isOpen={pModal} onClose={()=>setPModal(false)}/>
+    </button>
     </MaxWidthContainer>
   );
 }

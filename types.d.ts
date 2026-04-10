@@ -65,3 +65,51 @@ type Order = {
     phoneNumber: string;
   };
 };
+type OrderDetails = {
+  _id: string
+  subtotal: number
+  lateFeeAmount: number
+  forSale: boolean
+  item: OrderItem
+  status: string
+  user: OrderUser
+  renter: Renter
+  name: string
+  phoneNumber: string
+  address: string
+  appartment: string
+  shippingMethod: string
+  paymentIntentId: string
+  flw_ref: string
+  tx_ref: string
+  lateFeeApplied: boolean
+  createdAt: string
+  updatedAt: string
+  __v: number
+}
+  
+type OrderItem = {
+  _id: string
+  title: string
+  category: string
+  price: number
+  id: string
+}
+
+type OrderUser = {
+  _id: string
+  name: string
+  phoneNumber: string
+  address: string
+  profileImage: string
+  appartment: string
+}
+
+type Renter = {
+  _id: string
+  name: string
+  phoneNumber: string
+  address: string
+  profileImage: string
+  appartment: string
+}

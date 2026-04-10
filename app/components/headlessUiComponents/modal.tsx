@@ -105,7 +105,7 @@ export default function CommandPalette() {
               <div className="w-full">
                 <div className="w-full m-auto max-w-3xl sticky top-0 flex flex-row px-4">
                   {/* search input */}
-                  <div className="border-2 sticky  flex-1 rounded-full top-0 border-gray-200 z-10  h-[60px] flex flex-row gap-1">
+                  <div className="border-2 sticky bg-(--card) flex-1 rounded-full top-0 border-gray-200 z-10  h-[60px] flex flex-row gap-1">
                     <input
                       type="text"
                       value={query}
@@ -162,10 +162,9 @@ export default function CommandPalette() {
                       //     router.push(`/${cmd.username}`)
                       // }}
                       className="flex flex-col cursor-pointer items-center
-                                    rounded-md px-3 py-2 text-sm text-[--color]
-                                    aria-selected:bg-zinc-100 dark:aria-selected:bg-[hsl(var(--accent))]"
+                                    rounded-md px-3 py-2 text-base "
                     >
-                      <h3 className="text-lg w-full mb-1">Products</h3>
+                      <h3 className="text-lg text-black title-font2 w-full mb-1">Products</h3>
                       {results.map((item: Product, index: number) => (
                         <div
                           key={index}

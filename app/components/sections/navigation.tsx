@@ -17,7 +17,7 @@ export default function Navigation() {
     console.log("Auth State Changed:", { isAuthenticated, user });
   }, [isAuthenticated, user]);
   return (
-    <div className="w-full flex z-10 fixed  justify-center px-4 bg-white sm:px-5 py-4 items-center">
+    <div className="w-full flex z-20 fixed  justify-center px-4 bg-white sm:px-5 py-4 items-center">
       <div className="w-full  max-w-150 lg:max-w-300 ">
         <div className="flex justify-between">
           <Link href={"/"} className="flex gap-1 w-fit items-center">

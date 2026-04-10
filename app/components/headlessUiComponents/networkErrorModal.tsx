@@ -1,15 +1,17 @@
 "use client";
 import { Fragment } from "react";
 import { Dialog, Transition } from "@headlessui/react";
-import { WifiOffIcon, RefreshCcw } from "lucide-react";
+import { WifiOffIcon, RefreshCcw, AlertCircle } from "lucide-react";
 
 interface NetworkErrorProps {
+  errorTitle?: string;
+  errorMessage?: string;
   isOpen: boolean;
   onClose: () => void;
   onRetry?: () => void;
 }
 
-export function NetworkErrorModal({ isOpen, onClose, onRetry }: NetworkErrorProps) {
+export function NetworkErrorModal({ isOpen, onClose, onRetry,errorTitle,errorMessage }: NetworkErrorProps) {
   return (
     <Transition show={isOpen} as={Fragment}>
       <Dialog as="div" className="relative z-[100]" onClose={onClose}>
@@ -41,15 +43,15 @@ export function NetworkErrorModal({ isOpen, onClose, onRetry }: NetworkErrorProp
               
               {/* YOUR ORIGINAL UI START */}
               <div className="mb-6">
-                <WifiOffIcon size={48} className="text-(--warning) mx-auto" />
+                {errorMessage ? <AlertCircle size={48} className="text-(--warning) mx-auto"  /> : <WifiOffIcon size={48} className="text-(--warning) mx-auto" />}
               </div>
               
               <h1 className="text-xl tracking-body title-font2 text-black mb-2">
-                Network Error
+                {errorTitle || "Network Error"}
               </h1>
               
               <p className="text-(--secondary) tracking-body title-font2 mb-6">
-                Unable to get products. Please check your connection.
+                {errorMessage || "Unable to get products. Please check your connection."}
               </p>
               
               <div className="flex items-center gap-5 justify-center">
@@ -60,7 +62,7 @@ export function NetworkErrorModal({ isOpen, onClose, onRetry }: NetworkErrorProp
                   className="flex items-center space-x-2 px-4 py-2 bg-black hover:opacity-50 rounded-xl transition-colors"
                 >
                   <span className="text-white tracking-body title-font2">
-                    terminate
+                    Dismiss
                   </span>
                 </button>
                 <button 

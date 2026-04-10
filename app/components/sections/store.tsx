@@ -11,9 +11,11 @@ type pageProps = {
   products: any[]
 }
 const ProductSkeleton = () => {
-   
   return (
-    <div className="w-full flex flex-col gap-4 animate-pulse">
+    <div 
+      className="w-full flex flex-col gap-4 animate-pulse [mask-image:linear-gradient(to_bottom,black_20%,transparent_100%)]"
+      // Note: 'black' in a mask means 100% visible, 'transparent' means 0% visible.
+    >
       {/* Image Placeholder */}
       <div className="w-full overflow-hidden relative aspect-[0.882609/1] bg-gray-200 rounded-2xl" />
 
@@ -32,7 +34,7 @@ const ProductSkeleton = () => {
 
         {/* Buttons Placeholder */}
         <div className="flex gap-2">
-          <div className="h-9 w-full bg-black opacity-50 rounded-lg" />
+          <div className="h-9 w-full bg-black/50 rounded-lg" />
           <div className="h-9 w-full bg-gray-200 rounded-lg" />
         </div>
       </div>
@@ -61,6 +63,12 @@ export default function Store() {
              {!error && <div className="w-full grid grid-cols-2 lg:grid-cols-4 gap-3 lg:gap-4">
                 {loading && Array(8).fill(null).map((_, index) => (
                     <ProductSkeleton key={index}  />
+                ))}
+                {!loading && products.products && products.products.slice(16, 24).map((product: Product) => (
+                    <ProductCard
+                        key={product._id}
+                        {...product}
+                    />
                 ))}
              </div>}
              {

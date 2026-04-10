@@ -4,6 +4,10 @@ import { Dialog, Transition, Switch } from "@headlessui/react";
 import Image from "next/image";
 import bot from "@/app/assets/images/bottle.jpg";
 import { PencilIcon, X } from "lucide-react";
+import { useAuthStore } from "@/app/store/auth.store";
+import { createProducts } from "@/app/lib/async_data";
+import { SuccessModal } from "../headlessUiComponents/successModal";
+import { useProductStore } from "@/app/store/products.store";
 
 interface UploadProductModalProps {
   isOpen: boolean;
@@ -11,16 +15,22 @@ interface UploadProductModalProps {
 }
 
 export function UploadProductModal({ isOpen, onClose }: UploadProductModalProps) {
+  const {user,getCookie}=useAuthStore()
+  const {setSelectedProduct}=useProductStore()
+
   const [productVerificationStep, setProductVerificationStep] = useState(1);
   const [enabled, setEnabled] = useState(false); // false = Rent, true = Sale
-
+  const [loading,setLoading]=useState(false)
+  const [success,setSuccess]=useState(false)
+  const [error,seError]=useState(false)
+  const [createdProduct,setCreatedProduct]=useState<Product | null>(null)
   // --- STATE MANAGEMENT ---
-  const [imagePreview, setImagePreview] = useState<any>(bot);
+  const [imagePreview, setImagePreview] = useState<any>("");
   const [thumbnailFile, setThumbnailFile] = useState<File | null>(null);
   const [formData, setFormData] = useState({
     title: "",
     description: "",
-    category: "Fashion",
+    category: "all",
     price: "",
     replacementPrice: "",
   });
@@ -46,20 +56,56 @@ export function UploadProductModal({ isOpen, onClose }: UploadProductModalProps)
       setImagePreview(URL.createObjectURL(file));
     }
   };
-
+  const viewProduct=()=>{
+    createdProduct && setSelectedProduct(createdProduct)
+    
+  }
   const handleSubmit = async () => {
+     const rfToken=getCookie("RFTFL")
+  const acToken=getCookie("ACTFL")
+  const signedCookies1={
+    "accessToken":acToken,
+    "refreshToken":rfToken
+  }
+  const signedCookies=JSON.stringify(signedCookies1)
     const data = new FormData();
     data.append("title", formData.title);
     data.append("description", formData.description);
     data.append("category", formData.category);
-    data.append("listingType", enabled ? "sale" : "rent");
+    data.append("forSale", enabled.toString());
+    data.append("signedCookies", signedCookies)
     data.append("price", formData.price);
     if (!enabled) data.append("replacementPrice", formData.replacementPrice);
-    if (thumbnailFile) data.append("thumbnail", thumbnailFile);
-    console.log("Final Submission:", Object.fromEntries(data));
+    if (thumbnailFile) data.append("image", thumbnailFile);
+    
+    try {
+      setLoading(true)
+     const response=await createProducts(data)
+     const main :(undefined | {loggedIn:boolean,newProduct:Product}) =response?.data
+     if (main?.newProduct){
+      onClose()
+      setFormData({
+    title: "",
+    description: "",
+    category: "all",
+    price: "",
+    replacementPrice: "",
+  })
+  setThumbnailFile(null)
+  setImagePreview(null)
+    setProductVerificationStep(1)
+      setSuccess(true)
+      setCreatedProduct(main.newProduct)
+     }
+  } catch (error) {
+    console.log(error);
+  }finally{
+    setLoading(false)
+  }
   };
 
   return (
+    <>
     <Transition show={isOpen} as={Fragment}>
       <Dialog as="div" className="relative z-50" onClose={onClose}>
         <Transition.Child as={Fragment} enter="ease-out duration-300" enterFrom="opacity-0" enterTo="opacity-100" leave="ease-in duration-200" leaveFrom="opacity-100" leaveTo="opacity-0">
@@ -106,11 +152,11 @@ export function UploadProductModal({ isOpen, onClose }: UploadProductModalProps)
                                       <p className="text-sm tracking-body text-(--secondary) font-medium title-font">This will be displayed on your product listing.</p>
                                     </div>
                                     <div className="flex items-end gap-5">
-                                      <div className="size-20 rounded-2xl overflow-hidden border border-gray-100">
-                                        <Image className="size-full object-cover" alt="logo" width={100} height={100} src={imagePreview} />
+                                      <div className="size-20 bg-gray-100 rounded-2xl overflow-hidden border border-gray-100">
+                                        {imagePreview && <Image className="size-full object-cover" alt="logo" width={100} height={100} src={imagePreview} />}
                                       </div>
                                       <label className="cursor-pointer size-fit px-5 py-3 title-font bg-gray-200 transition-all rounded-xl font-medium text-sm text-black">
-                                        Change
+                                        {imagePreview ? "change" :"Upload"}
                                         <input type="file" className="hidden" accept="image/*" onChange={handleImageChange} />
                                       </label>
                                     </div>
@@ -164,10 +210,13 @@ export function UploadProductModal({ isOpen, onClose }: UploadProductModalProps)
                                         onChange={handleInputChange}
                                         className='w-full bg-(--card) title-font text-black border-gray-200 border h-10 leading-body tracking-body rounded-xl px-3'
                                       >
-                                        <option value="Fashion">Fashion</option>
-                                        <option value="Electronics">Electronics</option>
-                                        <option value="Music and Entertaiment">Music and Entertaiment</option>
-                                        <option value="Home Decor">Home Decor</option>
+                                        <option value="all">All Items</option>
+                                        <option value="Fashion & Accessories">Fashion & Accessories</option>
+                                        <option value="Books">Books</option>
+                                        <option value="Study Essentials">Study Essentials</option>
+                                        <option value="Electronics & Entertainment">Electronics & Entertainment</option>
+                                        <option value="Clothing & Lifestyle">Clothing & Lifestyle</option>
+                                        <option value="Other">Other</option>
                                       </select>
                                     </div>
                                   </section>
@@ -284,17 +333,30 @@ export function UploadProductModal({ isOpen, onClose }: UploadProductModalProps)
                               <button onClick={onClose} className="w-fit px-5 py-3 title-font hover:bg-gray-200 underline rounded-2xl text-sm text-(--secondary)">Cancel</button>
                               <div className="flex gap-4">
                                 {productVerificationStep === 2 && (
-                                  <button onClick={() => setProductVerificationStep(1)} className="w-fit title-font2 px-5 py-3 bg-gray-200 rounded-xl text-sm text-black">Back</button>
+                                  <button disabled={loading} onClick={() => setProductVerificationStep(1)} className="w-fit title-font2 px-5 py-3 bg-gray-200 rounded-xl text-sm text-black">Back</button>
                                 )}
+                                
                                 <button 
-                                  disabled={productVerificationStep === 1 && !isFormValid}
-                                  onClick={() => productVerificationStep === 1 ? setProductVerificationStep(2) : handleSubmit()} 
-                                  className={`w-fit title-font2 px-5 py-3 rounded-xl text-sm text-white transition-all ${
-                                    (productVerificationStep === 1 && !isFormValid) ? "bg-gray-300 cursor-not-allowed" : "bg-green-600 hover:bg-green-700"
-                                  }`}
-                                >
-                                  {productVerificationStep === 1 ? "Preview Product" : "Upload Product"}
-                                </button>
+  disabled={(productVerificationStep === 1 && !isFormValid) || loading}
+  onClick={() => productVerificationStep === 1 ? setProductVerificationStep(2) : handleSubmit()} 
+  className={`w-fit title-font2 px-5 py-3 rounded-xl text-sm text-white transition-all flex items-center gap-2 ${
+    ((productVerificationStep === 1 && !isFormValid) || loading) 
+      ? "bg-gray-300 cursor-not-allowed" 
+      : "bg-green-600 hover:bg-green-700 active:scale-95"
+  }`}
+>
+  {/* Label Logic */}
+  {productVerificationStep === 1 ? "Preview Product" : (loading ? "Uploading..." : "Upload Product")}
+
+  {/* Loader Logic */}
+  {loading && (
+    <div className="flex items-center space-x-1 ml-1">
+      <div className="w-1.5 h-1.5 bg-white rounded-full animate-pulse [animation-delay:-0.3s]" />
+      <div className="w-1.5 h-1.5 bg-white rounded-full animate-pulse [animation-delay:-0.15s]" />
+      <div className="w-1.5 h-1.5 bg-white rounded-full animate-pulse" />
+    </div>
+  )}
+</button>
                               </div>
                             </div>
                           </div>
@@ -309,5 +371,14 @@ export function UploadProductModal({ isOpen, onClose }: UploadProductModalProps)
         </div>
       </Dialog>
     </Transition>
+    <SuccessModal
+        isOpen={success}
+        onClose={()=>setSuccess(false)}
+        title="Item Created"
+        message="The product details have been verified and uploaded. It’s ready for customers to see!"
+        onContinue={viewProduct}
+        buttonData="View Product"
+    />
+    </>
   );
 }
