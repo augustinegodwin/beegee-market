@@ -96,7 +96,7 @@ export function UploadProductModal({ isOpen, onClose }: UploadProductModalProps)
       setImagePreview(null)
         setProductVerificationStep(1)
           setSuccess(true)
-      setCreatedProduct(main?.newProduct)
+      setCreatedProduct(main?.newProduct || null)
      }
   } catch (error) {
     setError(true)
