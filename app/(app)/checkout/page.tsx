@@ -11,15 +11,12 @@ import { PaymentForm } from "../../components/utils/payment-form";
 import { useProductStore } from "@/app/store/products.store";
 import { useAuthStore } from "@/app/store/auth.store";
 const formatPrice = (price: number) => {
-  // return new Intl.NumberFormat('en-NG', {
-  //   style: 'currency',
-  //   currency: 'NGN',
-  //   minimumFractionDigits: 0,
-  //   maximumFractionDigits: 0,
-  // }).format(price);
-  return (
-    'N'+ price
-  )
+  return new Intl.NumberFormat('en-NG', {
+    style: 'currency',
+    currency: 'NGN',
+    minimumFractionDigits: 0,
+    maximumFractionDigits: 0,
+  }).format(price);
 };
 
 export default function CheckoutPage() {
@@ -126,7 +123,7 @@ export default function CheckoutPage() {
                 <ChevronDown className="w-4 h-4  text-(--secondary)" />
               )}
             </div>
-            <div className="text-lg text-black title-font2 tracking-body">{formatPrice(2000)}</div>
+            <div className="text-lg text-black title-font2 tracking-body">{formatPrice(cartItems[0].subtotal + 350)}</div>
           </div>
           </button>
 
@@ -134,7 +131,7 @@ export default function CheckoutPage() {
           <div
             className={`${
               showOrderSummary ? "block" : "hidden"
-            } lg:block pl-4  sticky top-0 sm:pl-6 lg:pl-12 xl:pl-16 py-8 lg:py-12`}
+            } lg:block px-4  sticky top-0 sm:px-6 lg:pl-12 xl:pl-16 py-8 lg:py-12`}
           >
             <div className="max-w-xl  mx-auto lg:mr-auto lg:ml-0">
               {/* Cart Items */}
@@ -204,7 +201,7 @@ export default function CheckoutPage() {
                 <div className="text-right">
                   <span className="text-xs text-(--secondary) title-font2 mr-2">NGN</span>
                   <span className="text-2xl text-black title-font2">
-                    {cartItems[0].subtotal + 350}
+                    {formatPrice(cartItems[0].subtotal + 350)}
                   </span>
                 </div>
               </div>

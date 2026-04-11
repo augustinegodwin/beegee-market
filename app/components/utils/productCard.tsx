@@ -1,8 +1,10 @@
 import Image from "next/image";
 import bookmark from "@/app/assets/images/bookmark.svg";
 import { useProductStore } from "@/app/store/products.store";
+import { useRouter } from "next/navigation";
 export default function ProductCard( product:Product) {
-  const { setSelectedProduct } = useProductStore();
+  const { setSelectedProduct,addToCart } = useProductStore();
+  const router = useRouter();
   return (
     <div className="w-full flex flex-col gap-4">
       <div className="w-full overflow-hidden image-curtain relative aspect-[0.882609/1] border-gray-200 bg-(--card) rounded-2xl ">
@@ -37,11 +39,17 @@ export default function ProductCard( product:Product) {
         </div>
         <div className="flex gap-2">
           {product.availabilityStatus ? (
-            <button className="w-full cursor-pointer px-5 py-2 title-font2 bg-black transition-all rounded-lg font-medium leading-[1.1] tracking-body text-sm text-white ">
+            <button 
+            onClick={()=>{
+                            
+                            addToCart(product,1)
+                            router.push("/checkout")
+                          }}
+            className="w-full cursor-pointer px-5 py-2 title-font2 bg-black transition-all rounded-lg font-medium leading-[1.1] tracking-body text-sm text-white ">
               {product.forSale ? "Purchase" : "Rent"}
             </button>
           ) : (
-            <button className="w-full cursor-pointer px-5 py-2 title-font2 bg-(--green) transition-all rounded-lg font-medium leading-[1.1] tracking-body text-sm text-white ">
+            <button disabled className="w-full cursor-pointer px-5 py-2 title-font2 bg-(--green) transition-all rounded-lg font-medium leading-[1.1] tracking-body text-sm text-white ">
               {product.forSale ? "Purchase" : "Rent"}
             </button>
           )}

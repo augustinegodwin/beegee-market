@@ -41,7 +41,14 @@ export function PaymentForm() {
     | {}
   >({});
   
-
+const formatPrice = (price: number) => {
+  return new Intl.NumberFormat('en-NG', {
+    style: 'currency',
+    currency: 'NGN',
+    minimumFractionDigits: 0,
+    maximumFractionDigits: 0,
+  }).format(price);
+};
   // if (!isOpen) return null;
   useEffect(() => {
     // console.log({...paymentObj});
@@ -157,13 +164,13 @@ const {cartItems,clearCart}=useProductStore()
     date: string;
     paymentMethod: string;
     cartItems: any[];
-    total: number;
+    total: string | number;
   }>({email:email,
     orderNumber:"",
     date:"",
     paymentMethod:"",
     cartItems:cartItems,
-    total:cartitem.subtotal +350
+    total:formatPrice(cartitem.subtotal + 350)
   })
   const fwConfig = {
     ...config,
@@ -180,7 +187,7 @@ const {cartItems,clearCart}=useProductStore()
                 date:"",
                 paymentMethod:"",
                 cartItems:cartItems,
-                total:cartItems[0].subtotal
+                total:formatPrice(cartitem.subtotal + 350)
             })
             setModal(true)
       }
@@ -195,7 +202,7 @@ const {cartItems,clearCart}=useProductStore()
                 date:"",
                 paymentMethod:"",
                 cartItems:cartItems,
-                total:cartItems[0].subtotal
+                total:formatPrice(cartitem.subtotal + 350)
             })
             setModal(true)
         }
@@ -257,7 +264,7 @@ const {cartItems,clearCart}=useProductStore()
               </div>
               <div className="flex-1 min-w-56 w-full pr-3">
                 <span className="w-full break-keep text-base tracking-body text-(--secondary) title-font2">
-                  Home deleivryr
+                  Contact Delivery
                 </span>
               </div>
             </div>

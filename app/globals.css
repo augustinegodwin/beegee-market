@@ -23,6 +23,10 @@
   src: url(./assets/fonts/Livvic/Livvic-Medium.ttf ) ; 
 } 
 @font-face {
+  font-family: custom2;
+  src: url(./assets/fonts/ATWTTS.ttf) ; 
+} 
+@font-face {
   font-family: z;
   src: url(./assets/fonts/Livvic/Livvic-Medium.ttf ) ;
 } 
@@ -34,6 +38,9 @@
   font-family: InterB;  
   src: url(./assets/fonts/Livvic/Livvic-Medium.ttf );
 } 
+.tt{
+  font-family: custom2  ;
+}
 .title-font{
   font-family: custom ; 
   letter-spacing: normal !important ;
@@ -53,7 +60,7 @@ body {
   font-family: Arial, Helvetica, sans-serif;
 }
 .tracking-header{
-  @apply tracking-[-0.04em]
+  @apply tracking-[-0.01em] 
 }
 .tracking-body{
   @apply tracking-[-0.01em] 
@@ -68,7 +75,7 @@ body {
   /* background:linear-gradient(0deg, var(--token-05a02bb2-7838-4389-9f7d-c52d95863a7d, rgb(17, 80, 54)) , var(--token-a51bbfb7-d66f-4efb-8c73-18fea4bfb45d, rgb(37, 33, 33)) ) ; */
 } 
 .bri{ 
-  background-image:url(./assets/images/bg.mp4); 
+  /* background-image:url(./assets/images/bg.png);  */
   background-size:cover;
 }
 .image-curtain::before{ 

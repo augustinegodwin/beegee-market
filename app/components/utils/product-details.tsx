@@ -215,11 +215,10 @@ export function ProductModal() {
                         <button
                           onClick={()=>{
                             close()
-                            redirect('/store')
                           }}
                           className="w-full text-(--secondary) cursor-pointer bg-(--card) py-3 rounded-lg tracking-body leading-body title-font2 font-medium transition-opacity "
                         >
-                          Shop More
+                          Close
                         </button>
                       </div>
 

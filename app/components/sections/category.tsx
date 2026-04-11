@@ -19,22 +19,22 @@ export default function Category() {
             <div className="w-full grid grid-cols-2 lg:grid-cols-4 gap-4">
                 <CategoryCard
                     image={airpods}
-                    title='Airpods Max'
+                    title='Electronics'
                     linkTo='/store?category=books'
                 />
                 <CategoryCard
                     image={okay}
-                    title='Airpods Max'
+                    title='Entertainment'
                     linkTo='/store?category=books'
                 />
                 <CategoryCard
                     image={table}
-                    title='Airpods Max'
+                    title='Study Essentials'
                     linkTo='/store?category=books'
                 />
                 <CategoryCard
                     image={table2}
-                    title='Airpods Max'
+                    title='Others'
                     linkTo='/store?category=books'
                 />
             </div>

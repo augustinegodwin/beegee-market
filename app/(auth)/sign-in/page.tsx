@@ -3,7 +3,7 @@ import AuthButton from "@/app/components/utils/authButton";
 import Input from "@/app/components/utils/input";
 import Image from "next/image"
 import Link from "next/link"
-import logo from "@/app/assets/images/bot.png"
+import logo from "@/app/assets/images/Loader.png"
 import useFetch from "@/app/lib/useAsyncFetch";
 import { useState } from "react";
 import axiosInstance from "@/app/lib/axios";
@@ -67,9 +67,9 @@ export default function Page() {
       <div className="w-full max-w-100 bg-(--card) rounded-[30px] h-auto border border-gray-100 p-1.5">
        <div className="w-full h-auto flex flex-col items-center bg-[#fcfcfc] border border-gray-100 rounded-3xl py-5">
              <div className=" size-15 rounded-full border border-gray-100 z-10 bg-white -top-7.5">
-                  <Link href={'/'} className="flex size-full">
+                  <Link href={'/'} className="flex justify-center items-center size-full">
                     <Image
-                    className="size-full"
+                    className="size-[50%]"
                     alt="logo"
                     src={logo}
                 />

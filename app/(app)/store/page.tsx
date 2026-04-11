@@ -97,17 +97,17 @@ export default function Page() {
         <div className="w-full mt-10 py-25 p-5 bg-(--green) border rounded-3xl relative border-gray-200">
           <div className="w-full flex justify-center text-center">
             <div className="w-full items-center justify-center max-w-150 flex flex-col gap-5">
-              <h2 className="title-font2 text-[40px] sm:text-5xl lg:text-[65px] text-white leading-none tracking-header uppercase">
+            <h2 className="tt  text-[40px] sm:text-5xl lg:text-[65px] text-white leading-none tracking-header uppercase">
                 MARKETPLACE
               </h2>
-              <p className="text-lg text-white/75 title-font font-medium tracking-body">
+              <p className="text-lg text-white/75 tt font-medium tracking-body">
                 HOME / STORE
               </p>
             </div>
           </div>
         </div>
 
-        <div className="w-full py-25 gap-5 flex flex-col">
+        <div className="w-full py-10 lg:py-25 gap-5 flex flex-col">
           {/* Toolbar: Category Select & Buy/Sell Switch */}
           <div className="w-full flex justify-between items-center gap-5 flex-row">
             

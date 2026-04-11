@@ -14,7 +14,7 @@ export default function Hero() {
           <div className="card w-[150px] rounded-2xl absolute left-10 h-[200px] border-5 border-white"></div>
         </div> */}
       <SectionHeader
-        title="Join Bigham’s Largest Marketplace"
+        title="Join the Largest Campus Marketplace"
         body="Select a category to find textbooks, electronics, fashion, and more from your fellow students"
         buttonAction="/store"
         buttonValue="Shop Now"

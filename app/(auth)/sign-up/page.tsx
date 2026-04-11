@@ -2,7 +2,7 @@
 import { useState, useRef, ChangeEvent, FormEvent } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
-import logo from '../../assets/images/bot.png';
+import logo from '../../assets/images/Loader.png';
 import axiosInstance from '@/app/lib/axios';
 import avater from '../../../public/avatar.jpg'
 import { useRouter } from 'next/navigation';
@@ -134,9 +134,13 @@ export default function SignUpForm() {
                 
                 <div className="w-full h-auto flex flex-col items-center bg-[#fcfcfc] border border-gray-100 rounded-3xl py-5">
                     <div className="size-15 rounded-full border border-gray-100 z-10 bg-white -top-7.5">
-                        <Link href={'/'} className="flex size-full">
-                            <Image className="size-full" alt="logo" src={logo} />
-                        </Link>
+                        <Link href={'/'} className="flex justify-center items-center size-full">
+                                            <Image
+                                            className="size-[50%]"
+                                            alt="logo"
+                                            src={logo}
+                                        />
+                                        </Link>
                     </div>
 
                     <div className="w-full flex justify-center pt-5 flex-col items-center px-5 gap-3">

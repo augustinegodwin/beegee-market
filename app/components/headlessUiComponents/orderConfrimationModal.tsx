@@ -14,7 +14,7 @@ interface PaymentModalProps {
     date: string;
     paymentMethod: string;
     cartItems: {product: Product,quantity: number,subtotal: number;}[];
-    total: number;
+    total: string | number;
   };
 }
 
@@ -107,7 +107,7 @@ export default function PaymentConfirmation({ isOpen, onClose, status, data }: P
                   <div className="border-t border-gray-200 pt-4 flex justify-between items-center">
                     <span className="font-[bold-livvic] text-black title-font2 tracking-body">Total</span>
                     <span className="text-lg font-[bold-livvic] text-black title-font2 tracking-body">
-                      N {data.total}
+                       {data.total}
                     </span>
                   </div>
                 </div>

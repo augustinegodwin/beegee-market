@@ -1,7 +1,7 @@
 "use client";
 import Image from "next/image";
 import Link from "next/link";
-import bot from "../../assets/images/bot.png";
+import bot from "../../assets/images/Loader.png";
 import user from "../../assets/images/user.jpg";
 import Input from "../utils/input";
 import userSvg from "../../assets/images/user.svg"
@@ -21,17 +21,19 @@ export default function Navigation() {
       <div className="w-full  max-w-150 lg:max-w-300 ">
         <div className="flex justify-between">
           <Link href={"/"} className="flex gap-1 w-fit items-center">
-            <Image src={bot} alt="logo" className="w-auto h-10" />
+            <Image src={bot} alt="logo" className="w-auto h-7" />
             <span className="text-3xl a hidden lg:block text-black leading-[1.1] tracking-body">
               Beegee
             </span>
           </Link>
           <div className="max-w-100 w-full hidden lg:flex flex-1 h-full" onClick={()=>setSearchQuery(true)}>
-            <Input
-                placeholder="Search Products on beegee"
-                type="text"
+            <div
+                // placeholder=""
+                className='w-full flex justify-center items-center text-(--secondary) bg-(--card) cursor-pointer title-font  border-gray-200 border h-10 leading-body tracking-body rounded-xl px-3'
                 
-            />
+            >
+              Search Products on beegee
+            </div>
           </div>
           <div className="flex gap-2.5 items-center">
             <div onClick={()=>setSearchQuery(true)} className="size-10 cursor-pointer rounded-full bg-(--card) flex lg:hidden items-center justify-center border-gray-200 overflow-hidden border p-0.5">

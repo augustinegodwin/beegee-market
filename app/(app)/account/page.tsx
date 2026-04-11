@@ -46,7 +46,7 @@ const showOrder=(order:OrderDetails)=>{
     { id: 1, title: "General Settings" },
     { id: 2, title: "Wallet" },
     { id: 3, title: "Orders" },
-    { id: 4, title: "products" },
+    { id: 4, title: "My Sales" },
   ];
  const orders = [
     {
@@ -103,7 +103,7 @@ const showOrder=(order:OrderDetails)=>{
                           </p>
                   </div>
 
-                  <div className="flex flex-row lg:flex-col gap-4 w-full overflow-hidden">
+                  <div className="flex flex-row lg:flex-col gap-4 w-full overflow-auto">
                     {tabs.map((tab) => (
                       <button
                         key={tab.id}
@@ -152,7 +152,7 @@ const showOrder=(order:OrderDetails)=>{
                             </p>
                           </div>
                           <div>
-                            <Input type="text" placeholder={user?.user.name} />
+                            <input className='w-full bg-(--card) title-font text-black border-gray-200 border h-10 leading-body tracking-body rounded-xl px-3' type="text" placeholder={user?.user.name} />
                           </div>
                         </section>
                         <section className="w-full grid gap-x-8 gap-y-6 sm:grid-cols-2">
@@ -165,7 +165,7 @@ const showOrder=(order:OrderDetails)=>{
                             </p>
                           </div>
                           <div>
-                            <Input
+                            <input className='w-full bg-(--card) title-font text-black border-gray-200 border h-10 leading-body tracking-body rounded-xl px-3'
                               type="text"
                               placeholder={user?.user.school}
                             />
@@ -181,7 +181,7 @@ const showOrder=(order:OrderDetails)=>{
                             </p>
                           </div>
                           <div>
-                            <Input type="text" placeholder={user?.user.phoneNumber} />
+                            <input className='w-full bg-(--card) title-font text-black border-gray-200 border h-10 leading-body tracking-body rounded-xl px-3' type="text" placeholder={user?.user.phoneNumber} />
                           </div>
                         </section>
                         <section className="w-full grid gap-x-8 gap-y-6 sm:grid-cols-2">
@@ -194,7 +194,7 @@ const showOrder=(order:OrderDetails)=>{
                             </p>
                           </div>
                           <div>
-                            <Input type="text" placeholder="*************" />
+                            <input className='w-full bg-(--card) title-font text-black border-gray-200 border h-10 leading-body tracking-body rounded-xl px-3' type="text" placeholder="*************" />
                           </div>
                         </section>
                         <div className="flex gap-5">
@@ -208,7 +208,7 @@ const showOrder=(order:OrderDetails)=>{
                               </p>
                             </div>
                             <div>
-                              <Input type="text" placeholder={user?.user.level} />
+                              <input className='w-full bg-(--card) title-font text-black border-gray-200 border h-10 leading-body tracking-body rounded-xl px-3' type="text" placeholder={user?.user.level} />
                             </div>
                           </section>
                           
