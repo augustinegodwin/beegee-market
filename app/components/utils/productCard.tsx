@@ -42,9 +42,9 @@ export default function ProductCard( product:Product) {
             <button 
             onClick={()=>{
                             
-                            addToCart(product,1)
-                            router.push("/checkout")
-                          }}
+                                    addToCart(product,1)
+                                    router.push("/checkout")
+                                  }}
             className="w-full cursor-pointer px-5 py-2 title-font2 bg-black transition-all rounded-lg font-medium leading-[1.1] tracking-body text-sm text-white ">
               {product.forSale ? "Buy" : "Rent"}
             </button>
