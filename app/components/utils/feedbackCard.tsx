@@ -11,7 +11,7 @@ export default function FeedbackCard({ message, user, status }: testiprop) {
             <p className="leading-body title-font track-body font-medium text-(--secondary)">{message}</p>
         </div>
         <div className='flex flex-col'>
-            <p className='text-sm leading-5 text-(--primary) font-medium title-font '>{user}</p>
+            <p className='text-sm leading-5 text-(--primary) font-medium custom3 '>{user}</p>
             <p className='text-sm leading-5 text-(--secondary) title-font'>{status}</p>
         </div>
     </div>

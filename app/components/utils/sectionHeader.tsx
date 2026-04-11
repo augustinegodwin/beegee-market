@@ -11,12 +11,12 @@ export default function SectionHeader(data: SHProp) {
     <div className="w-full flex justify-center">
       <div className="w-full items-center justify-center max-w-150 flex flex-col gap-5">
         <div className="w-fit">
-        <h2 className="text-center tt   text-5xl lg:text-[65px] text-(--primary) leading-none tracking-header">
+        <h2 className="text-center custom4 text-5xl lg:text-[65px] text-(--primary) leading-none tracking-header">
             {data.title}
           </h2>
         </div>
         <div className="w-full max-w-100 flex flex-col justify-center items-center gap-5">
-          <p className="text-center text-lg text-(--secondary) leading-body title-font font-medium tracking-body">
+          <p className="text-center text-lg text-(--secondary) leading-body custom3 font-medium tracking-body">
             {data.body}
           </p>
           {data.buttonValue ? (

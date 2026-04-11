@@ -9,6 +9,7 @@ import { useProductStore } from "@/app/store/products.store";
 import { redirect, useRouter } from "next/navigation";
 import { useAuthStore } from "@/app/store/auth.store";
 import { sign } from "crypto";
+import { formatPrice } from "./formatPrice";
 
 interface ProductModalProps {
   isOpen: boolean;
@@ -142,7 +143,7 @@ export function ProductModal() {
                         <p className="text-(--secondary) leading-body tracking-body title-font ">
                           {selectedProduct.category}
                         </p>
-                        <h2 className="text-3xl tracking-[-0.02em] text-black atwtts">
+                        <h2 className="text-3xl tracking-[-0.02em] text-black custom4">
                           {selectedProduct.title}
                         </h2>
                       </div>
@@ -161,12 +162,12 @@ export function ProductModal() {
                           Price
                         </span>
                         <div className="flex items-baseline gap-4">
-                          <span className="title-font text-4xl title-font2 text-black">
-                            N{total.toLocaleString('en-NG')}
+                          <span className="text-4xl tracking-body custom4 text-black">
+                            {formatPrice(total)}
                           </span>
                           {!selectedProduct.forSale && (
                             <span className="text-lg title-font2 title-font text-(--secondary)">
-                              {selectedProduct.price} Per Hour
+                              {formatPrice(Number(selectedProduct.price))} Per Hour
                             </span>
                           )}
                         </div>

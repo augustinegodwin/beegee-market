@@ -233,7 +233,7 @@ const showOrder=(order:OrderDetails)=>{
                               NGN
                             </p>
                             <h2
-                              className={` text-center w-fit atwtts text-3xl lg:text-[48px] text-black leading-none tracking-[-0.01em]`}
+                              className={` text-center w-fit custom4 text-3xl lg:text-[48px] text-black leading-none tracking-[-0.01em]`}
                             >
                               {user.user.walletBalance.toLocaleString('en-NG')}
                             </h2>
@@ -256,7 +256,7 @@ const showOrder=(order:OrderDetails)=>{
                               NGN
                             </p>
                             <h2
-                              className={` text-center w-fit atwtts text-3xl lg:text-[48px] text-black leading-none tracking-[-0.01em]`}
+                              className={` text-center w-fit custom4 text-3xl lg:text-[48px] text-black leading-none tracking-[-0.01em]`}
                             >
                               {user.user.walletDebt.toLocaleString('en-NG')}
                             </h2>

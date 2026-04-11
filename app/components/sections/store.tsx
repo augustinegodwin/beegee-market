@@ -55,7 +55,7 @@ export default function Store() {
     <MaxWidthContainer>
         <div className="py-25 flex flex-col justify-center gap-25">
             <SectionHeader
-                title='Explore our top selling products'
+                title='Explore Top Selling Products'
                 body='Discover to buy, sell and rent anything on campus with ease.'
                 buttonValue='View All products'
                 buttonAction='/store'

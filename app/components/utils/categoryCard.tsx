@@ -15,7 +15,7 @@ export default function CategoryCard(data:CategoryProp) {
             alt={data.title}
         />
         <div className="w-full flex justify-center pb-2.5">
-            <h3 className='font-medium title-font text-(--primary) text-lg tracking-body leading-5'>{data.title}</h3>
+            <h3 className='font-medium custom3 text-(--primary) text-lg tracking-body leading-5'>{data.title}</h3>
         </div>
     </Link>
   )

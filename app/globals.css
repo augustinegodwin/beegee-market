@@ -35,6 +35,20 @@
   src: url(./assets/fonts/Livvic/Livvic-Medium.ttf );  
 }  
 @font-face {
+  font-family: custom3;
+  src: url(./assets/fonts/Livvic/Livvic-SemiBold.ttf)  ; 
+} 
+@font-face {
+  font-family: custom4;
+  src: url(./assets/fonts/Livvic/Livvic-Bold.ttf)  ; 
+} 
+.custom3{
+    font-family: custom3 ;
+}
+.custom4{
+    font-family: custom4 ;
+}
+@font-face {
   font-family: InterB;  
   src: url(./assets/fonts/Livvic/Livvic-Medium.ttf );
 } 
@@ -60,10 +74,10 @@ body {
   font-family: Arial, Helvetica, sans-serif;
 }
 .tracking-header{
-  @apply tracking-[-0.01em] 
+  @apply tracking-[-0.04em] 
 }
 .tracking-body{
-  @apply tracking-[-0.01em] 
+  @apply tracking-[-0.04em] 
 }
 .leading-body{
   @apply leading-[1.4em]
