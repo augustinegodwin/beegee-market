@@ -5,6 +5,7 @@ import Footer from "../components/sections/footer";
 import Navigation from "../components/sections/navigation";
 import CommandPalette from "../components/headlessUiComponents/modal";
 import AppLayoutAuth from ".";
+import { ProductModal } from "../components/utils/product-details";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -37,7 +38,7 @@ export default function RootLayout({
           {children}
           <Footer/>
           <CommandPalette/>
-          
+          <ProductModal />
         </AppLayoutAuth>
       </body>
       

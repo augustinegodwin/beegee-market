@@ -20,19 +20,19 @@
 }
 @font-face {
   font-family: custom;
-  src: url(./assets/fonts/Boris.ttf) ; 
+  src: url(./assets/fonts/Livvic/Livvic-Medium.ttf ) ; 
 } 
 @font-face {
   font-family: z;
-  src: url(./assets/fonts/Boris.ttf) ;
+  src: url(./assets/fonts/Livvic/Livvic-Medium.ttf ) ;
 } 
 @font-face {
   font-family: ATWTTS;  
-  src: url(./assets/fonts/Boris.ttf);  
+  src: url(./assets/fonts/Livvic/Livvic-Medium.ttf );  
 }  
 @font-face {
   font-family: InterB;  
-  src: url(./assets/fonts/Boris.ttf);
+  src: url(./assets/fonts/Livvic/Livvic-Medium.ttf );
 } 
 .title-font{
   font-family: custom ; 
@@ -71,10 +71,10 @@ body {
   background-image:url(./assets/images/bg.mp4); 
   background-size:cover;
 }
-.image-curtain::before{
+.image-curtain::before{ 
   position:absolute;
   content:"";
-  z-index:20;
+  z-index:2;
   background-color:#6c757d1a ; 
   width:100%;
   height:100%;

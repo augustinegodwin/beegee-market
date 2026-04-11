@@ -45,7 +45,7 @@ export default function ProductCard( product:Product) {
               {product.forSale ? "Purchase" : "Rent"}
             </button>
           )}
-           <button className="w-full cursor-pointer px-5 py-2 title-font2 bg-(--card) border-2 border-gray-200 transition-all rounded-lg font-medium leading-[1.1] tracking-body text-sm text-black " onClick={()=>setSelectedProduct(product)}>
+           <button className="w-full cursor-pointer px-5 py-2 title-font2 bg-gray-200  border-gray-200 transition-all rounded-lg font-medium leading-[1.1] tracking-body text-sm text-black " onClick={()=>setSelectedProduct(product)}>
               View
             </button>
         </div>

@@ -15,7 +15,7 @@ interface ProductModalProps {
   onClose: () => void
 }
 
-export function ProductModal({ isOpen, onClose }: ProductModalProps) {
+export function ProductModal() {
   const [quantity, setQuantity] = useState(1);
   
   const { setSelectedProduct,selectedProduct,addToCart,clearCart } = useProductStore();
@@ -92,7 +92,7 @@ export function ProductModal({ isOpen, onClose }: ProductModalProps) {
         <div className="fixed inset-0 overflow-y-auto">
           <div className="flex min-h-full items-end justify-center ">
             <div className="w-full h-[40px] hidden lg:flex justify-center absolute top-0 left-0">
-                <div className="w-full flex justify-end items-center cursor-pointer" onClick={onClose} >
+                <div className="w-full flex justify-end items-center cursor-pointer" onClick={close} >
                   <div className="size-10 flex items-center justify-center"><X  className="size-6 cursor-pointer text-white" /></div>
                   
                 </div>
@@ -162,7 +162,7 @@ export function ProductModal({ isOpen, onClose }: ProductModalProps) {
                         </span>
                         <div className="flex items-baseline gap-4">
                           <span className="title-font text-4xl title-font2 text-black">
-                            N{total}
+                            N{total.toLocaleString('en-NG')}
                           </span>
                           {!selectedProduct.forSale && (
                             <span className="text-lg title-font2 title-font text-(--secondary)">
@@ -205,6 +205,7 @@ export function ProductModal({ isOpen, onClose }: ProductModalProps) {
                           disabled={!selectedProduct.availabilityStatus}
                           onClick={()=>{
                             router.push("/checkout")
+                            setSelectedProduct(null)
                             addToCart(selectedProduct,quantity)
                           }}
                           className="w-full bg-green-600 py-3 cursor-pointer rounded-lg tracking-body leading-body title-font2 font-medium hover:bg-(--green) transition-opacity disabled:opacity-50 disabled:cursor-not-allowed"

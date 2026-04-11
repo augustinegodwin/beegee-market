@@ -8,6 +8,7 @@ import { useAuthStore } from "@/app/store/auth.store";
 import { createProducts } from "@/app/lib/async_data";
 import { SuccessModal } from "../headlessUiComponents/successModal";
 import { useProductStore } from "@/app/store/products.store";
+import { NetworkErrorModal } from "../headlessUiComponents/networkErrorModal";
 
 interface UploadProductModalProps {
   isOpen: boolean;
@@ -22,9 +23,8 @@ export function UploadProductModal({ isOpen, onClose }: UploadProductModalProps)
   const [enabled, setEnabled] = useState(false); // false = Rent, true = Sale
   const [loading,setLoading]=useState(false)
   const [success,setSuccess]=useState(false)
-  const [error,seError]=useState(false)
+  const [error,setError]=useState(false)
   const [createdProduct,setCreatedProduct]=useState<Product | null>(null)
-  // --- STATE MANAGEMENT ---
   const [imagePreview, setImagePreview] = useState<any>("");
   const [thumbnailFile, setThumbnailFile] = useState<File | null>(null);
   const [formData, setFormData] = useState({
@@ -62,11 +62,11 @@ export function UploadProductModal({ isOpen, onClose }: UploadProductModalProps)
   }
   const handleSubmit = async () => {
      const rfToken=getCookie("RFTFL")
-  const acToken=getCookie("ACTFL")
-  const signedCookies1={
-    "accessToken":acToken,
-    "refreshToken":rfToken
-  }
+    const acToken=getCookie("ACTFL")
+    const signedCookies1={
+      "accessToken":acToken,
+      "refreshToken":rfToken
+    }
   const signedCookies=JSON.stringify(signedCookies1)
     const data = new FormData();
     data.append("title", formData.title);
@@ -81,24 +81,25 @@ export function UploadProductModal({ isOpen, onClose }: UploadProductModalProps)
     try {
       setLoading(true)
      const response=await createProducts(data)
-     const main :(undefined | {loggedIn:boolean,newProduct:Product}) =response?.data
-     if (main?.newProduct){
+     const main :(null | {loggedIn:boolean,newProduct:Product}) =response?.data
+     console.log(response)
+     if (response){
       onClose()
       setFormData({
-    title: "",
-    description: "",
-    category: "all",
-    price: "",
-    replacementPrice: "",
-  })
-  setThumbnailFile(null)
-  setImagePreview(null)
-    setProductVerificationStep(1)
-      setSuccess(true)
-      setCreatedProduct(main.newProduct)
+        title: "",
+        description: "",
+        category: "all",
+        price: "",
+        replacementPrice: "",
+      })
+      setThumbnailFile(null)
+      setImagePreview(null)
+        setProductVerificationStep(1)
+          setSuccess(true)
+      setCreatedProduct(main?.newProduct)
      }
   } catch (error) {
-    console.log(error);
+    setError(true)
   }finally{
     setLoading(false)
   }
@@ -378,6 +379,12 @@ export function UploadProductModal({ isOpen, onClose }: UploadProductModalProps)
         message="The product details have been verified and uploaded. It’s ready for customers to see!"
         onContinue={viewProduct}
         buttonData="View Product"
+    />
+    <NetworkErrorModal
+      isOpen={error}
+      onClose={()=>setError(false)}
+      errorMessage="Unable to upload product to begee check your network connection and try again"
+      errorTitle="Upload Failed"onRetry={handleSubmit}
     />
     </>
   );

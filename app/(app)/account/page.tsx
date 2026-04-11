@@ -464,7 +464,7 @@ const showOrder=(order:OrderDetails)=>{
         onClose={()=>setConfrim(false)}
         title="Are you sure you want to logout?"
         description="Logging out will require you to enter your credentials again to access your account."
-        cancelText="No, keep me logged in"
+        cancelText="Stay logged in"
         variant="danger"
         onConfirm={logout}
       />

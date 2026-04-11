@@ -34,11 +34,11 @@ export default function Navigation() {
             />
           </div>
           <div className="flex gap-2.5 items-center">
-            <div className="size-10 rounded-full bg-(--card) flex lg:hidden items-center justify-center border-gray-200 overflow-hidden border p-0.5">
+            <div onClick={()=>setSearchQuery(true)} className="size-10 cursor-pointer rounded-full bg-(--card) flex lg:hidden items-center justify-center border-gray-200 overflow-hidden border p-0.5">
                 <Image src={search} alt="search" className="size-6" />
             </div>
             <div className="size-10 flex rounded-full bg-(--card) justify-center items-center border-gray-200 overflow-hidden border ">
-                <Link href={"/account"} className="flex justif size-full">
+                <Link href={"/account"} className="flex justify-center items-center size-full">
                     {isAuthenticated && user?.user ? (
                         user.user.profileImage ? (
                            <div className="size-full overflow-hidden rounded-full">

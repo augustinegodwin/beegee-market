@@ -27,49 +27,24 @@ export default function CheckoutPage() {
   const {selectedProduct,setSelectedProduct,cartItems}=useProductStore()
   const {user,isLoading}=useAuthStore()
   const [showOrderSummary, setShowOrderSummary] = useState(false);
-  const items= [
-    {
-      "product": {
-        "_id": "68bed5b0ca0ed9546042aa44",
-        "title": "60A 12V/24V/36V/48V Juta PWM Solar Charge Controller with LCD Display ",
-        "description": "60A 12V/24V/36V/48V Juta PWM Solar Charge Controller with LCD Display ",
-        "category": "electrical-tools",
-        "image": [
-          {
-            "url": "https://res.cloudinary.com/dt6naawfk/image/upload/v1757337005/Post-images/tmp-26-1757337004879_zy6hty.jpg",
-            "width": 800,
-            "height": 800,
-            "aspectRatio": 1,
-            "_id": "68bed5b0ca0ed9546042aa45",
-            "id": "68bed5b0ca0ed9546042aa45"
-          },
-          // ... other images
-        ],
-        "price": 50000,
-        "discountPercentage": 60000,
-        "rating": 4.5,
-        "stock": 50,
-        "brand": "Generic",
-        "sku": "WP6048D ",
-        "availabilityStatus": "In Stock",
-        "id": "68bed5b0ca0ed9546042aa44"
-      },
-      "quantity": 1
-    }
-  ]
 
  
   useEffect(() => {
   // 1. Wait for the 'loading' state of your auth/store to be false
-  if (!isLoading) { 
+
     // 2. Now check if they are actually empty
-    if (!cartItems && !user) {
+    if (!cartItems.length) {
        console.log(user,selectedProduct)
       router.push("/store");
     }
-  }
+    if (!user) {
+       console.log(user,selectedProduct)
+      router.push("/store");
+    }
+    console.log(cartItems)
 }, [user, selectedProduct, isLoading, router]);
-  if(user && cartItems) return (
+  
+  if(user && cartItems.length) return (
    <div className="w-full lg:px-10 bg-white">
      <div className=" pt-18.75 max-w-[1200px] m-auto w-full ">
       {/* Header */}
