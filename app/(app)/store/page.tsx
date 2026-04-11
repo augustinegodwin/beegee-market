@@ -176,7 +176,7 @@ export default function Page() {
             </div>
           )}
 
-          {!loading && error && (
+          {!loading && error && !mainproducts && (
             <div className="py-25">
               <NetworkEror />
             </div>
