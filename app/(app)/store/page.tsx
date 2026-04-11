@@ -64,7 +64,9 @@ export default function Page() {
   const [selectedProduct, setSelectedProduct] = useState<any>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [pModal, setPModal] = useState(false);
-  
+  const shuffleArray = (array: any[]) => {
+  return [...array].sort(() => Math.random() - 0.5);
+};
   // --- FILTER STATES ---
   const [activeCategory, setActiveCategory] = useState("all");
   const [isForSale, setIsForSale] = useState(true); // true = Buy (For Sale), false = Sell (Rent/Swap)
@@ -83,11 +85,16 @@ export default function Page() {
 
   // --- FILTERING LOGIC ---
   const filteredProducts = useMemo(() => {
-    return mainproducts.filter((product) => {
+    // 1. First, create a shuffled version of the main list
+    const shuffled = shuffleArray(mainproducts);
+
+    // 2. Then, filter that shuffled list
+    return shuffled.filter((product) => {
       const categoryMatch = activeCategory === "all" || product.category === activeCategory;
       const typeMatch = product.forSale === isForSale;
       return categoryMatch && typeMatch;
     });
+    // mainproducts as dependency ensures it reshuffles only when fresh data arrives
   }, [mainproducts, activeCategory, isForSale]);
 
   return (
