@@ -35,6 +35,10 @@
   src: url(./assets/fonts/Livvic/Livvic-Medium.ttf );  
 }  
 @font-face {
+  font-family: custom3;
+  src: url(./assets/fonts/Avengenz.ttf) ; 
+} 
+@font-face {
   font-family: InterB;  
   src: url(./assets/fonts/Livvic/Livvic-Medium.ttf );
 } 
