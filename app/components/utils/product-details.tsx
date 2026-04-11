@@ -108,10 +108,14 @@ export function ProductModal() {
               leaveFrom="opacity-100 scale-100 translate-y-0"
               leaveTo="opacity-0 scale-95 translate-y-10"
             >
-              <Dialog.Panel className="relative w-full px-4 sm:px-10 bg-white flex justify-center h-[calc(100vh-40px)] overflow-y-scroll">
+              <Dialog.Panel className="relative w-full px-4 sm:px-10 bg-white flex justify-center h-screen lg:h-[calc(100vh-40px)] overflow-y-scroll">
                 
                 {/* YOUR ORIGINAL UI START */}
-                <div className="relative max-w-[550px] lg:max-w-[1200px] w-full h-fit py-10">
+                <div className="relative max-w-[550px] lg:max-w-[1200px] w-full h-fit pt-0 lg:pt-10 pb-10">
+                  <div className="w-full flex lg:hidden h-10 my-2 justify-end items-center cursor-pointer" onClick={close} >
+                  <div className="size-10 hover:bg-gray-200 rounded-full flex items-center justify-center"><X  className="size-6 cursor-pointer text-gray-700" /></div>
+                  
+                </div>
                   <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-20">
                     <div className="flex flex-col gap-5">
                       <div className="relative w-full aspect-square lg:aspect-[0.92/1] bg-gray-200 rounded-2xl overflow-hidden">
@@ -209,7 +213,7 @@ export function ProductModal() {
                             setSelectedProduct(null)
                             addToCart(selectedProduct,quantity)
                           }}
-                          className="w-full bg-green-600 py-3 cursor-pointer rounded-lg tracking-body leading-body title-font2 font-medium hover:bg-(--green) transition-opacity disabled:opacity-50 disabled:cursor-not-allowed"
+                          className="w-full bg-black py-2 cursor-pointer rounded-lg tracking-body leading-body transition-all custom3 font-medium hover:opacity-90 transition-opacity disabled:opacity-50 disabled:cursor-not-allowed"
                         >
                           {selectedProduct.forSale ? "Buy Now" :"Rent Now"}
                         </button>
@@ -217,7 +221,7 @@ export function ProductModal() {
                           onClick={()=>{
                             close()
                           }}
-                          className="w-full text-(--secondary) cursor-pointer bg-(--card) py-3 rounded-lg tracking-body leading-body title-font2 font-medium transition-opacity "
+                          className="w-full text-(--secondary) cursor-pointer bg-(--card) py-2 rounded-lg tracking-body leading-body custom3 font-medium transition-opacity "
                         >
                           Close
                         </button>

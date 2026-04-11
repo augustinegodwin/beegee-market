@@ -149,7 +149,7 @@ export function UploadProductModal({ isOpen, onClose }: UploadProductModalProps)
                                   {/* THUMBNAIL */}
                                   <section className="w-full grid gap-x-8 gap-y-6 sm:grid-cols-2">
                                     <div className="space-y-1">
-                                      <h2 className="text-lg tracking-body text-(--primary) font-medium title-font">Product Thumbnail</h2>
+                                      <h2 className="text-lg tracking-body text-(--primary) custom3">Product Thumbnail</h2>
                                       <p className="text-sm tracking-body text-(--secondary) font-medium title-font">This will be displayed on your product listing.</p>
                                     </div>
                                     <div className="flex items-end gap-5">
@@ -166,7 +166,7 @@ export function UploadProductModal({ isOpen, onClose }: UploadProductModalProps)
                                   {/* TITLE */}
                                   <section className="w-full grid gap-x-8 gap-y-6 sm:grid-cols-2">
                                     <div className="space-y-1">
-                                      <h2 className="text-lg tracking-body text-(--primary) font-medium title-font">Product Title</h2>
+                                      <h2 className="text-lg tracking-body text-(--primary) custom3">Product Title</h2>
                                       <p className="text-sm tracking-body text-(--secondary) font-medium title-font">This will be displayed on your product listing.</p>
                                     </div>
                                     <div>
@@ -184,7 +184,7 @@ export function UploadProductModal({ isOpen, onClose }: UploadProductModalProps)
                                   {/* DESCRIPTION */}
                                   <section className="w-full grid gap-x-8 gap-y-6 sm:grid-cols-2">
                                     <div className="space-y-1">
-                                      <h2 className="text-lg tracking-body text-(--primary) font-medium title-font">Product Description</h2>
+                                      <h2 className="text-lg tracking-body text-(--primary) custom3">Product Description</h2>
                                       <p className="text-sm tracking-body text-(--secondary) font-medium title-font">This will be displayed on your product listing.</p>
                                     </div>
                                     <div>
@@ -201,7 +201,7 @@ export function UploadProductModal({ isOpen, onClose }: UploadProductModalProps)
                                   {/* CATEGORY SELECT */}
                                   <section className="w-full grid gap-x-8 gap-y-6 sm:grid-cols-2">
                                     <div className="space-y-1">
-                                      <h2 className="text-lg tracking-body text-(--primary) font-medium title-font">Category Selection</h2>
+                                      <h2 className="text-lg tracking-body text-(--primary) custom3">Category Selection</h2>
                                       <p className="text-sm tracking-body text-(--secondary) font-medium title-font">This will be displayed on your product listing.</p>
                                     </div>
                                     <div>
@@ -225,7 +225,7 @@ export function UploadProductModal({ isOpen, onClose }: UploadProductModalProps)
                                   {/* LISTING TYPE */}
                                   <section className="w-full grid gap-x-8 gap-y-6 sm:grid-cols-2 items-center">
                                     <div className="space-y-1">
-                                      <h2 className="text-lg tracking-body text-(--primary) font-medium title-font">
+                                      <h2 className="text-lg tracking-body text-(--primary) custom3">
                                         Listing Type: <span className={enabled ? "text-green-600" : "text-black"}>{enabled ? "For Sale" : "For Rent"}</span>
                                       </h2>
                                       <p className="text-sm tracking-body text-(--secondary) font-medium title-font">
@@ -242,7 +242,7 @@ export function UploadProductModal({ isOpen, onClose }: UploadProductModalProps)
                                   {/* PRICE */}
                                   <section className="w-full grid gap-x-8 gap-y-6 sm:grid-cols-2">
                                     <div className="space-y-1">
-                                      <h2 className="text-lg tracking-body text-(--primary) font-medium title-font">{enabled ? "Selling Price" : "Price per Hour"}</h2>
+                                      <h2 className="text-lg tracking-body text-(--primary) custom3">{enabled ? "Selling Price" : "Price per Hour"}</h2>
                                       <p className="text-sm tracking-body text-(--secondary) font-medium title-font">
                                         {enabled ? "The Least selling price is N100.00 and least selling Price the maximum is N1,000,000.00" : "Set your hourly rental rate. Minimum N100.00 per hour."}
                                       </p>
@@ -263,7 +263,7 @@ export function UploadProductModal({ isOpen, onClose }: UploadProductModalProps)
                                   {!enabled && (
                                     <section className="w-full grid gap-x-8 gap-y-6 sm:grid-cols-2">
                                       <div className="space-y-1">
-                                        <h2 className="text-lg tracking-body text-(--primary) font-medium title-font">Replacement Price</h2>
+                                        <h2 className="text-lg tracking-body text-(--primary) custom3">Replacement Price</h2>
                                         <p className="text-sm tracking-body text-(--secondary) font-medium title-font">The Least selling price is N100.00 and least selling Price the maximum is N1,000,000.00</p>
                                       </div>
                                       <div>
@@ -288,14 +288,14 @@ export function UploadProductModal({ isOpen, onClose }: UploadProductModalProps)
                                       <div className="max-w-60 w-full overflow-hidden border border-gray-100 rounded-2xl aspect-[0.94/1]">
                                         <Image className="size-full object-cover" alt="preview" width={300} height={300} src={imagePreview} />
                                       </div>
-                                      <h2 className="text-black leading-title tracking-header title-font2 text-2xl text-center">
+                                      <h2 className="text-black leading-title tracking-body custom3 text-2xl text-center">
                                         {formData.title}
                                       </h2>
                                   </section>
 
                                   <section className="w-full flex rounded-2xl max-w-150 p-5 flex-col gap-5 bg-gray-100">
                                       <div className="w-full flex justify-between">
-                                          <span className="text-base tracking-body title-font2 text-black">Product details</span>
+                                          <span className="text-base tracking-body custom3 text-black">Product details</span>
                                           <button onClick={() => setProductVerificationStep(1)} className="text-(--green) flex gap-1 items-center tracking-body text-sm title-font2 justify-center"><PencilIcon size={14} /> Edit</button>
                                       </div>
                                       <div className="w-full flex flex-col sm:flex-row gap-5 sm:gap-10 justify-between">
@@ -314,7 +314,7 @@ export function UploadProductModal({ isOpen, onClose }: UploadProductModalProps)
 
                                   <section className="w-full flex rounded-2xl max-w-150 p-5 flex-col gap-5 bg-gray-100">
                                       <div className="w-full flex justify-between">
-                                          <span className="text-base tracking-body title-font2 text-black">Pricing details</span>
+                                          <span className="text-base tracking-body custom3 text-black">Pricing details</span>
                                           <button onClick={() => setProductVerificationStep(1)} className="text-(--green) flex gap-1 items-center tracking-body text-sm title-font2 justify-center"><PencilIcon size={14} /> Edit</button>
                                       </div>
                                       <div className="w-full flex gap-10 justify-between">

@@ -29,7 +29,7 @@ export default function Navigation() {
           <div className="max-w-100 w-full hidden lg:flex flex-1 h-full" onClick={()=>setSearchQuery(true)}>
             <div
                 // placeholder=""
-                className='w-full flex justify-center items-center text-(--secondary) bg-(--card) cursor-pointer title-font  border-gray-200 border h-10 leading-body tracking-body rounded-xl px-3'
+                className='w-full flex justify-start items-center text-(--secondary) bg-(--card) cursor-pointer title-font  border-gray-200 border h-10 leading-body tracking-body rounded-xl px-3'
                 
             >
               Search Products on beegee

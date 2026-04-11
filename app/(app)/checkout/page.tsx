@@ -123,7 +123,7 @@ export default function CheckoutPage() {
                 <ChevronDown className="w-4 h-4  text-(--secondary)" />
               )}
             </div>
-            <div className="text-lg text-black title-font2 tracking-body">{formatPrice(cartItems[0].subtotal + 350)}</div>
+            <div className="text-lg text-black custom3 tracking-body">{formatPrice(cartItems[0].subtotal + 350)}</div>
           </div>
           </button>
 
@@ -200,7 +200,7 @@ export default function CheckoutPage() {
                 </span>
                 <div className="text-right">
                   <span className="text-xs text-(--secondary) title-font2 mr-2">NGN</span>
-                  <span className="text-2xl text-black title-font2">
+                  <span className="text-2xl text-black custom3 tracking-body">
                     {formatPrice(cartItems[0].subtotal + 350)}
                   </span>
                 </div>

@@ -52,7 +52,7 @@ export function SuccessModal({ isOpen, onClose, onContinue, title, message,butto
               </div>
               
               {/* Title */}
-              <h1 className="text-xl tracking-body title-font2 text-black mb-2">
+              <h1 className="text-xl tracking-body custom3 text-black mb-2">
                 {title || "Success!"}
               </h1>
               

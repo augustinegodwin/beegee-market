@@ -41,20 +41,20 @@ const ProductSkeleton = () => {
       <div className="w-full flex flex-col gap-2.5">
         {/* Title Placeholder */}
         <div className="w-full space-y-2">
-          <div className="h-4 bg-gray-200 rounded w-full" />
-          <div className="h-4 bg-gray-200 rounded w-2/3" />
+          <div className="h-3 bg-gray-200 rounded w-full" />
+          <div className="h-3 bg-gray-200 rounded w-2/3" />
         </div>
 
         {/* Status and Price Placeholder */}
         <div className="flex w-full justify-between items-center">
-          <div className="h-4 bg-gray-200 rounded w-20" />
-          <div className="h-4 bg-gray-200 rounded w-16" />
+          <div className="h-3 bg-gray-200 rounded w-20" />
+          <div className="h-3 bg-gray-200 rounded w-16" />
         </div>
 
         {/* Buttons Placeholder */}
         <div className="flex gap-2">
-          <div className="h-9 w-full bg-black/50 rounded-lg" />
-          <div className="h-9 w-full bg-gray-200 rounded-lg" />
+          <div className="h-8 w-full bg-black/50 rounded-lg" />
+          <div className="h-8 w-full bg-gray-200 rounded-lg" />
         </div>
       </div>
     </div>

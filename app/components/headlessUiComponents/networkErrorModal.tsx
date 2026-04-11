@@ -46,7 +46,7 @@ export function NetworkErrorModal({ isOpen, onClose, onRetry,errorTitle,errorMes
                 {errorMessage ? <AlertCircle size={48} className="text-(--warning) mx-auto"  /> : <WifiOffIcon size={48} className="text-(--warning) mx-auto" />}
               </div>
               
-              <h1 className="text-xl tracking-body title-font2 text-black mb-2">
+              <h1 className="text-xl tracking-body custom3 text-black mb-2">
                 {errorTitle || "Network Error"}
               </h1>
               

@@ -7,7 +7,7 @@ export default function NetworkEror() {
   <div className="mb-6">
     <WifiOffIcon size={48} className="text-(--warning) mx-auto" />
   </div>
-  <h1 className="text-xl tracking-body title-font2 text-black mb-2">Network Error</h1>
+  <h1 className="text-xl tracking-body custom3 text-black mb-2">Network Error</h1>
   <p className="text-(--secondary) tracking-body title-font2 mb-6">
     Unable to get products. Please check your connection.
   </p>

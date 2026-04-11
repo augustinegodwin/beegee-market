@@ -61,7 +61,7 @@ export default function PaymentConfirmation({ isOpen, onClose, status, data }: P
                       )}
                     </div>
                   </div>
-                  <h1 className="text-2xl title-font tracking-header text-black">
+                  <h1 className="text-2xl custom3 tracking-header text-black">
                     {isSuccess ? "Payment Completed" : "Payment Failed"}
                   </h1>
                   <p className="text-sm text-(--secondary) tracking-body title-font2  mt-2">

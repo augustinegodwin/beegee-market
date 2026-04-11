@@ -182,7 +182,7 @@ export default function CommandPalette() {
                       ))}
                     </Command.Item>
                   )}
-                   {query && !results.length && (
+                   {query && !loading && !results.length && (
                       <Command.Item
                       // key={index}
                       // value={cmd._id}
