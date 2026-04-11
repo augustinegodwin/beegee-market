@@ -35,7 +35,11 @@ export default function ProductCard( product:Product) {
             </p>
           )}
           <p className="text-semibold leading-body tracking-body custom3 text-sm text-(--primary)">
+<<<<<<< HEAD
             {formatPrice(Number(product.price))} <i></i>
+=======
+            N{Number(product.price).toLocaleString('en-NG')} <i></i>
+>>>>>>> 7c62748f16623f438481dc863f14a1bff6d61a59
           </p>
         </div>
         <div className="flex gap-2">
