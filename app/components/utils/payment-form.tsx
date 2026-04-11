@@ -142,8 +142,8 @@ const {cartItems,clearCart}=useProductStore()
     payment_options: "card,mobilemoney,ussd",
     customer: {
       email: email,
-      phone_number: preparePayment().phoneNumber,
-      name:preparePayment().name,
+      phone_number: preparePayment().phoneNumber || "",
+      name: preparePayment().name || "",
     },
     customizations: {
       title: "Teatflash Flw",
