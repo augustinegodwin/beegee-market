@@ -38,6 +38,9 @@
   font-family: custom3;
   src: url(./assets/fonts/Avengenz.ttf) ; 
 } 
+.custom3{
+    font-family: custom3 ;
+}
 @font-face {
   font-family: InterB;  
   src: url(./assets/fonts/Livvic/Livvic-Medium.ttf );
