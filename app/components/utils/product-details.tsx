@@ -162,13 +162,8 @@ export function ProductModal() {
                           Price
                         </span>
                         <div className="flex items-baseline gap-4">
-<<<<<<< HEAD
                           <span className="text-4xl tracking-body custom4 text-black">
                             {formatPrice(total)}
-=======
-                          <span className="text-4xl custom4 text-black">
-                            N{total.toLocaleString('en-NG')}
->>>>>>> 7c62748f16623f438481dc863f14a1bff6d61a59
                           </span>
                           {!selectedProduct.forSale && (
                             <span className="text-lg title-font2 title-font text-(--secondary)">
