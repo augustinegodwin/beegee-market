@@ -436,7 +436,7 @@ export default function Page() {
                                 </td>
                                 <td className="relative px-6 py-4 whitespace-nowrap">
                                   <span
-                                    className={`inline-flex rounded-md border px-2.5 py-0.5 text-xs font-medium title-font2 ${order.status === "paid"
+                                    className={`inline-flex rounded-md border px-2.5 py-0.5 text-xs font-medium title-font2 ${sale.status === "paid"
                                       ? "bg-green-50 text-green-700 border-green-200"
                                       : "bg-blue-50 text-blue-700 border-blue-200"
                                       }`}
