@@ -17,6 +17,8 @@ import { UploadProductModal } from "@/app/components/utils/uploadProductsModal";
 import { useState, useMemo } from "react";
 // ... (your existing imports)
 import { Plus, ChevronDown } from "lucide-react";
+import { useAuthStore } from "@/app/store/auth.store";
+import { useRouter } from "next/navigation";
 
 // Updated filter items (removed active boolean as we use state now)
 const filterItems = [
@@ -64,6 +66,8 @@ export default function Page() {
   const [selectedProduct, setSelectedProduct] = useState<any>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [pModal, setPModal] = useState(false);
+  const {user}=useAuthStore()
+  const router = useRouter();
   const shuffleArray = (array: any[]) => {
   return [...array].sort(() => Math.random() - 0.5);
 };
@@ -188,7 +192,14 @@ export default function Page() {
       {/* <ProductModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} /> */}
       <CookieBanner />
       <button
-        onClick={() => setPModal(true)}
+        onClick={() => {
+          
+          if (user){
+            setPModal(true)
+          }else{
+              router.push("/sign-in")
+          }
+        }}
         className="fixed bottom-8 right-4 cursor-pointer sm:right-8 z-50 flex items-center justify-center size-14 bg-black text-white rounded-full shadow-lg shadow-black/20 hover:scale-110 active:scale-95 transition-all duration-200 group"
       >
         <Plus size={28} className="transition-transform group-hover:rotate-90 duration-300" />

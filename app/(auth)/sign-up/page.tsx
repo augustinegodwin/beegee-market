@@ -144,7 +144,7 @@ export default function SignUpForm() {
                     </div>
 
                     <div className="w-full flex justify-center pt-5 flex-col items-center px-5 gap-3">
-                        <h3 className='title-font text-(--primary) text-2xl tracking-body leading-5'>
+                        <h3 className='custom3 text-(--primary) text-2xl tracking-body leading-5'>
                             {showMore === 1 ? "Create your account" : "Complete Profile"}
                         </h3>
                         <p className="leading-body text-center title-font track-body font-medium text-(--secondary)">

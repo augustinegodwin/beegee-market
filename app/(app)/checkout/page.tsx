@@ -10,6 +10,8 @@ import Image from "next/image";
 import { PaymentForm } from "../../components/utils/payment-form";
 import { useProductStore } from "@/app/store/products.store";
 import { useAuthStore } from "@/app/store/auth.store";
+import AuthRequiredPage from "@/app/components/utils/authpage";
+import EmptyCart from "@/app/components/utils/nocartIems";
 const formatPrice = (price: number) => {
   return new Intl.NumberFormat('en-NG', {
     style: 'currency',
@@ -26,21 +28,20 @@ export default function CheckoutPage() {
   const [showOrderSummary, setShowOrderSummary] = useState(false);
 
  
-  useEffect(() => {
-  // 1. Wait for the 'loading' state of your auth/store to be false
-
-    // 2. Now check if they are actually empty
-    if (!cartItems.length) {
-       console.log(user,selectedProduct)
-      router.push("/store");
+   if (!cartItems.length && user) {
+       return (
+        <div className="w-full min-h-[90vh] max-h-[900px] py-25 px-5 flex justify-center items-center">
+          <EmptyCart/>
+        </div>
+       )
     }
     if (!user) {
-       console.log(user,selectedProduct)
-      router.push("/store");
+       return (
+        <div className="w-full min-h-[90vh] max-h-[900px] py-25 px-5 flex justify-center items-center">
+          <AuthRequiredPage/>
+        </div>
+       )
     }
-    console.log(cartItems)
-}, [user, selectedProduct, isLoading, router]);
-  
   if(user && cartItems.length) return (
    <div className="w-full lg:px-10 bg-white">
      <div className=" pt-18.75 max-w-[1200px] m-auto w-full ">

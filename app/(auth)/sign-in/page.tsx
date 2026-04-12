@@ -76,7 +76,7 @@ export default function Page() {
                 </Link>
              </div>
             <div className="w-full flex justify-center pt-5 flex-col items-center px-5 gap-3">
-                <h3 className=' title-font text-(--primary) text-2xl tracking-body leading-5'>Welcome back</h3>
+                <h3 className='custom3 text-(--primary) text-2xl tracking-body leading-5'>Welcome back</h3>
                 <p className="leading-body text-center title-font track-body font-medium text-(--secondary)">Enter your credentials to log in.</p>
                 <form className="w-full flex-col flex gap-4" onSubmit={handleSubmit}>
                     <div className="w-full flex flex-col gap-1">

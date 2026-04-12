@@ -5,7 +5,7 @@ import { NetworkErrorModal } from "../components/headlessUiComponents/networkErr
 export default function  AppLayoutAuth({
   children,
 }: Readonly<{
-  children: React.ReactNode;
+  children: React.ReactNode
 }>) {
     const {fetchAuthenticatedUser,isLoading,isAuthenticated,networkError,setNetworkError}=useAuthStore()
       useEffect(()=>{
