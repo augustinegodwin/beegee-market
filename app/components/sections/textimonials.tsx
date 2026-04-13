@@ -49,9 +49,9 @@ export default function Testimonials() {
     <MaxWidthContainer>
         <div className="py-25 w-full flex flex-col justify-center gap-25">
             <SectionHeader
-                title="Amazing Feedback from Begee User's "
+                title="Amazing Feedback from Beegee User's "
                 body='Explore what buyers, sellers and people who rent on our platform are saying about beegee'
-                buttonValue='Join the textimony'
+                buttonValue='Join the testimony'
                 buttonAction='https://chat.whatsapp.com/DJ3TM9S64eW0ui5I9Zgzh6?mode=gi_t'
             />
             <div className="w-full grid grid-cols-2 lg:grid-cols-4 gap-3 lg:gap-4">

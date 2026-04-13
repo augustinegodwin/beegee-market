@@ -14,10 +14,48 @@ interface OrderDetailsModalProps {
     onClose: () => void;
     orderDetails: OrderDetails;
 }
+const orderState = (user: User, order: OrderDetails) => {
+    const status = order.status //
+    const frsale = order.forSale
+    const iamSeler = user._id === order.user._id
+    // if i am the sller
+        // if product iis for sale
+            // if iam the seller and order was created click delivered
+            // if i am the seller and its was deleivered awaiting confrimation from user
+            // if i am the seller and the item was confrimed order completed or no oder to display seff
+        //    mone enters my account
+    // if i am the customer 
+        // if product is for sale 
+            // if i am the customer and i have made the order  'awaiting delevery'
+            // if i am the user and the seller has delivered "order completed"
 
+
+            
+    // if i am the seller or the person who uplooaded the product for rent
+        // if product iis for rent
+            // if iam the admin and order was created click delivered
+            // if i am the admin and its was deleivered awaiting confrimation from user
+            // if i am the admin and the item was confrimed "awiting return from customer"
+            // if i am the admin and customer has clicked returnED  "COMPLETE ORDER"
+            // IF Iam the admin and i click order completed then we are done
+    // if i am the customer 
+        // if product is for rent 
+            // if i am the customer and i have made the order  'awaiting delevery'
+            // if i am the user and the product was delevered 'recieved"
+            // if i a he user and i click recieved then "return"
+            // if i am the user and i have clicked returned awaiting cnfrimation from seller"
+        // note all this place where we need to await the button should be disabked 
+
+        // "this is the button that will be clicked based o each stages bth for seller or renter and customer"
+    return (
+        <button className="flex-1 flex gap-2 disabled:opacity-60 justify-center items-center px-5 h-10 title-font2 text-white cursor-pointer bg-black transition-all rounded-xl font-medium leading-[1.1] tracking-body text-sm">
+            Complete Order
+        </button>
+    )
+}
 export function OrderDetailsModal({ isOpen, onClose, orderDetails }: OrderDetailsModalProps) {
     const [quantity, setQuantity] = useState(1);
-    const {user}=useAuthStore()
+    const { user,getCookie } = useAuthStore()
     return (
         <Transition show={isOpen} as={Fragment}>
             <Dialog as="div" className="relative z-50" onClose={onClose}>
@@ -86,7 +124,7 @@ export function OrderDetailsModal({ isOpen, onClose, orderDetails }: OrderDetail
                                         <div className="flex flex-col gap-6">
                                             <div className='flex flex-col gap-1'>
                                                 <div className="w-full flex justify-between gap-5">
-                                                    <p className="text-black text-lg leading-body tracking-body title-font ">
+                                                    <p className="text-black text-lg leading-body tracking-body custom3 ">
                                                         Order #{orderDetails._id}
                                                     </p>
                                                     <span
@@ -248,17 +286,17 @@ export function OrderDetailsModal({ isOpen, onClose, orderDetails }: OrderDetail
                                                             </p>
                                                         </div>
                                                     </div>
-                                                    
+
                                                 </div>
                                                 {/* Complete orer process */}
-                                                    {
-                                                    
-                                                        orderDetails.user._id !== user?.user._id ?<div className="w-full mt-5 flex justify-end">
-                                                        <button className="flex-1 flex gap-2 disabled:opacity-60 justify-center items-center px-5 h-10 title-font2 text-white cursor-pointer bg-black transition-all rounded-xl font-medium leading-[1.1] tracking-body text-sm">
-                                                            Complete Order
-                                                        </button>
-                                                    </div>:<></>
-                                                    }
+                                                {
+                                                    orderDetails.user._id !== user?.user._id ?
+                                                        <div className="w-full mt-5 flex justify-end">
+                                                            <button className="flex-1 flex gap-2 disabled:opacity-60 justify-center items-center px-5 h-10 title-font2 text-white cursor-pointer bg-black transition-all rounded-xl font-medium leading-[1.1] tracking-body text-sm">
+                                                                Complete Order
+                                                            </button>
+                                                        </div> : <></>
+                                                }
                                             </div>
                                         </div>
                                     </div>

@@ -71,7 +71,7 @@ type OrderDetails = {
   lateFeeAmount: number
   forSale: boolean
   item: OrderItem
-  status: string
+  status: "paid" | "delivered" | "return" | "completed"  
   user: OrderUser
   renter: Renter
   name: string

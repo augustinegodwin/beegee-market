@@ -36,12 +36,12 @@
 }  
 @font-face {
   font-family: custom3;
-  src: url(./assets/fonts/Livvic/Livvic-SemiBold.ttf)  ; 
+  src: url(./assets/fonts/Livvic/Livvic-SemiBold.ttf); 
 } 
 @font-face {
   font-family: custom4;
-  src: url(./assets/fonts/Livvic/Livvic-Bold.ttf)  ; 
-} 
+  src: url(./assets/fonts/Avengenz.ttf)  ; 
+}  
 .custom3{
     font-family: custom3 ;
 }
