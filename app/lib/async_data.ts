@@ -123,7 +123,7 @@ export const createOrder = async (paymentObj:any) => {
     return error    
   }
 };
-export const updateOrder = async (orderId:any,orderOblect) => {
+export const updateOrder = async (orderId:any,orderObject:OrderDetails) => {
   try {
     const request=await axiosInstance.post(`/v1/orders/Update/${orderId}`,{
       orderId,
