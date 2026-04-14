@@ -180,7 +180,7 @@ export default function Page() {
             </div>
           )}
 
-          {!loading && error && !mainproducts && (
+          {!loading && error && !filteredProducts.length && (
             <div className="py-25">
               <NetworkEror />
             </div>

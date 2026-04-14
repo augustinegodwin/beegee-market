@@ -15,44 +15,58 @@ interface OrderDetailsModalProps {
     orderDetails: OrderDetails;
 }
 const orderState = (user: User, order: OrderDetails) => {
-    const status = order.status //
-    const frsale = order.forSale
-    const iamSeler = user._id === order.user._id
-    // if i am the sller
-        // if product iis for sale
-            // if iam the seller and order was created click delivered
-            // if i am the seller and its was deleivered awaiting confrimation from user
-            // if i am the seller and the item was confrimed order completed or no oder to display seff
-        //    mone enters my account
-    // if i am the customer 
-        // if product is for sale 
-            // if i am the customer and i have made the order  'awaiting delevery'
-            // if i am the user and the seller has delivered "order completed"
+  const status = order.status;
+  const isSale = order.forSale;
+  const isSeller = user._id === order.user._id;
+  const isCustomer = user._id === order.renter._id;
 
+  let buttonText = "";
+  let isDisabled = false;
+  let onClickAction = () => {}; // Hook this up to your update functions
 
-            
-    // if i am the seller or the person who uplooaded the product for rent
-        // if product iis for rent
-            // if iam the admin and order was created click delivered
-            // if i am the admin and its was deleivered awaiting confrimation from user
-            // if i am the admin and the item was confrimed "awiting return from customer"
-            // if i am the admin and customer has clicked returnED  "COMPLETE ORDER"
-            // IF Iam the admin and i click order completed then we are done
-    // if i am the customer 
-        // if product is for rent 
-            // if i am the customer and i have made the order  'awaiting delevery'
-            // if i am the user and the product was delevered 'recieved"
-            // if i a he user and i click recieved then "return"
-            // if i am the user and i have clicked returned awaiting cnfrimation from seller"
-        // note all this place where we need to await the button should be disabked 
+  // --- FOR SALE FLOW ---
+  if (isSale) {
+    if (isSeller) {
+      if (status === "paid") buttonText = "Mark as Delivered";
+      else if (status === "delivered") { buttonText = "Awaiting Confirmation"; isDisabled = true; }
+      else if (status === "completed") { buttonText = "Order Completed"; isDisabled = true; }
+    } 
+    else if (isCustomer) {
+      if (status === "paid") { buttonText = "Awaiting Delivery"; isDisabled = true; }
+      else if (status === "delivered") buttonText = "Confirm Receipt";
+      else if (status === "completed") { buttonText = "Order Completed"; isDisabled = true; }
+    }
+  } 
 
-        // "this is the button that will be clicked based o each stages bth for seller or renter and customer"
-    return (
-        <button className="flex-1 flex gap-2 disabled:opacity-60 justify-center items-center px-5 h-10 title-font2 text-white cursor-pointer bg-black transition-all rounded-xl font-medium leading-[1.1] tracking-body text-sm">
-            Complete Order
-        </button>
-    )
-}
+  // --- FOR RENT FLOW ---
+  else {
+    if (isSeller) {
+      if (status === "paid") buttonText = "Mark as Delivered";
+      else if (status === "delivered") { buttonText = "Awaiting Customer Receipt"; isDisabled = true; }
+      else if (status === "return") buttonText = "Confirm Return & Complete";
+      else if (status === "completed") { buttonText = "Order Completed"; isDisabled = true; }
+    } 
+    else if (isCustomer) {
+      if (status === "paid") { buttonText = "Awaiting Delivery"; isDisabled = true; }
+      else if (status === "delivered") buttonText = "Mark as Received";
+      else if (status === "return") { buttonText = "Awaiting Seller Confirmation"; isDisabled = true; }
+      else if (status === "completed") { buttonText = "Order Completed"; isDisabled = true; }
+    }
+  }
+
+  // Fallback if no state matches
+  if (!buttonText) return null;
+
+  return (
+    <button 
+      disabled={isDisabled}
+      onClick={onClickAction}
+      className="flex-1 flex gap-2 disabled:opacity-60 justify-center items-center px-5 h-10 title-font2 text-white cursor-pointer bg-black transition-all rounded-xl font-medium leading-[1.1] tracking-body text-sm"
+    >
+      {buttonText}
+    </button>
+  );
+};
 export function OrderDetailsModal({ isOpen, onClose, orderDetails }: OrderDetailsModalProps) {
     const [quantity, setQuantity] = useState(1);
     const { user,getCookie } = useAuthStore()
@@ -289,14 +303,10 @@ export function OrderDetailsModal({ isOpen, onClose, orderDetails }: OrderDetail
 
                                                 </div>
                                                 {/* Complete orer process */}
-                                                {
-                                                    orderDetails.user._id !== user?.user._id ?
+                                              
                                                         <div className="w-full mt-5 flex justify-end">
-                                                            <button className="flex-1 flex gap-2 disabled:opacity-60 justify-center items-center px-5 h-10 title-font2 text-white cursor-pointer bg-black transition-all rounded-xl font-medium leading-[1.1] tracking-body text-sm">
-                                                                Complete Order
-                                                            </button>
-                                                        </div> : <></>
-                                                }
+                                                            <orderState user={user} order={orderDetails} />
+                                                        </div> 
                                             </div>
                                         </div>
                                     </div>
