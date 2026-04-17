@@ -19,11 +19,7 @@ interface OrderDetailsModalProps {
     onClose: () => void;
     orderDetails: OrderDetails;
 }
-<<<<<<< HEAD
 const OrderState = (user: User, order: OrderDetails) => {
-=======
-const orderState = (user: User, order: OrderDetails) => {
->>>>>>> ffdb1e4c11df38f66c5c2f7973e9de8032f559f1
   const status = order.status;
   const isSale = order.forSale;
   const isSeller = user._id === order.user._id;
@@ -273,90 +269,8 @@ export function OrderDetailsModal({ isOpen, onClose, orderDetails }: OrderDetail
                                                     </div>
                                                 </div>
                                             </div>
-<<<<<<< HEAD
                                             }
                                             {user?.user && orderDetails && <OrderTimeline user={user.user} order={orderDetails}/>}
-=======
-                                            <div className='flex flex-col gap-4 border-t border-dashed border-gray-200 pt-5'>
-                                                <span className="text-(--secondary) leading-body tracking-body title-font ">
-                                                    Timeline
-                                                </span>
-                                                <div className="w-full flex flex-col">
-                                                    {/* STAGE 1 */}
-                                                    <div className="relative flex gap-5 items-start pb-8">
-                                                        {/* Connecting Line */}
-                                                        <div className="absolute left-5 top-10 w-[1px] h-full bg-gray-200" />
-
-                                                        <div className="relative z-10 aspect-square flex justify-center items-center h-10 rounded-full border border-gray-200 bg-white">
-                                                            <ShoppingBag className="text-orange-300" size={20} />
-                                                        </div>
-
-                                                        <div className="flex-1 flex flex-col gap-1">
-                                                            <span className="text-black line-clamp-1 leading-body tracking-body title-font">Order Confirmed</span>
-                                                            <p className="text-(--secondary) inline-flex text-xs leading-body tracking-body title-font">
-                                                                Order Placed and confirmed
-                                                            </p>
-                                                        </div>
-
-                                                        <div className="flex h-10 items-start">
-                                                            <p className="text-(--secondary) inline-flex text-sm leading-body tracking-body title-font">
-                                                                Oct 29, 2026
-                                                            </p>
-                                                        </div>
-                                                    </div>
-
-                                                    {/* STAGE 2 */}
-                                                    <div className="relative flex gap-5 items-start pb-8">
-                                                        {/* Connecting Line (Dashed to show progress to next) */}
-                                                        <div className="absolute left-5 top-10 w-[1px] h-full border-l border-dashed border-gray-300" />
-
-                                                        <div className="relative z-10 aspect-square flex justify-center items-center h-10 rounded-full border border-gray-200 bg-white">
-                                                            <Gift className="text-purple-300" size={20} />
-                                                        </div>
-
-                                                        <div className="flex-1 flex flex-col gap-1">
-                                                            <span className="text-black line-clamp-1 leading-body tracking-body title-font">Order Delivered</span>
-                                                            <p className="text-(--secondary) inline-flex text-xs leading-body tracking-body title-font">
-                                                                Order Delivered and received
-                                                            </p>
-                                                        </div>
-
-                                                        <div className="flex h-10 items-start">
-                                                            <p className="text-(--secondary) inline-flex text-sm leading-body tracking-body title-font">
-                                                                Nov 3, 2026
-                                                            </p>
-                                                        </div>
-                                                    </div>
-
-                                                    {/* STAGE 3 (Last Stage) */}
-                                                    <div className="relative flex gap-5 items-start">
-                                                        {/* No line needed after last child */}
-                                                        <div className="relative z-10 aspect-square flex justify-center items-center h-10 rounded-full border border-dashed border-gray-300 bg-gray-50">
-                                                            <Check className="text-gray-300" size={20} />
-                                                        </div>
-
-                                                        <div className="flex-1 flex flex-col gap-1">
-                                                            <span className="text-gray-400 line-clamp-1 leading-body tracking-body title-font italic">Order completed (pending)</span>
-                                                            <p className="text-gray-300 inline-flex text-xs leading-body tracking-body title-font">
-                                                                Waiting for final verification
-                                                            </p>
-                                                        </div>
-
-                                                        <div className="flex h-10 items-start">
-                                                            <p className="text-gray-300 inline-flex text-sm leading-body tracking-body title-font">
-                                                                -- --
-                                                            </p>
-                                                        </div>
-                                                    </div>
-
-                                                </div>
-                                                {/* Complete orer process */}
-                                              
-                                                        <div className="w-full mt-5 flex justify-end">
-                                                            <orderState user={user} order={orderDetails} />
-                                                        </div> 
-                                            </div>
->>>>>>> ffdb1e4c11df38f66c5c2f7973e9de8032f559f1
                                         </div>
                                     </div>
                                 </div>
