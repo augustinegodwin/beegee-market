@@ -52,12 +52,14 @@ export const useAuthStore = create<AuthState>((set) => ({
   },
   fetchAuthenticatedUser:async ()=> {
     set({isLoading:true})
+    
     try {
+      
         const user=await getAuthenticatedUser()
         if (user) set({isAuthenticated:true,user: (user as unknown) as AuthUser})
         else set({isAuthenticated:false,user:null})
     } catch (error) {
-        set({isAuthenticated:false,user:null,networkError:true})
+        set({isAuthenticated:false,user:null})
     }finally{
         set({isLoading:false})
     }

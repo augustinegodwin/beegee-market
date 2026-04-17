@@ -20,6 +20,8 @@ import { OrderDetailsModal } from "@/app/components/utils/orderdetailsModal";
 import AuthRequiredPage from "@/app/components/utils/authpage";
 import { formatDate } from "@/app/components/utils/formatDate";
 import { formatPrice } from "@/app/components/utils/formatPrice";
+import { StatusBadge } from "@/app/components/utils/statusBadge";
+import { AddBankModal } from "@/app/components/utils/accountUpdateModal";
 const geistMono = Geist_Mono({
   variable: "--font-geist-mono",
   subsets: ["latin"],
@@ -75,6 +77,7 @@ export default function Page() {
   const [pModal, setPModal] = useState(false)
   const [confrim, setConfrim] = useState(false)
   const [orderDetails, setOrderDetails] = useState(false)
+  const [bankModal, setBankModal] = useState(false)
   const [selectedOrder, setSelectedOrder] = useState<(OrderDetails | null)>(null)
   const showOrder = (order: OrderDetails) => {
     setSelectedOrder(order)
@@ -98,10 +101,10 @@ export default function Page() {
     router.refresh();
   }
   const tabs = [
-    { id: 1, title: "General Settings" },
-    { id: 2, title: "Wallet" },
-    { id: 3, title: "Orders" },
-    { id: 4, title: "My Sales" },
+    { id: 1, title: "General Settings" ,count:0},
+    { id: 2, title: "Wallet",count:0 },
+    { id: 3, title: "Orders", count: myOrders.length }, // Pass your actual data lengths here
+    { id: 4, title: "My Sales", count: mySales.length },
   ];
   if (!user && !isAuthenticated) return (
     <MaxWidthContainer>
@@ -128,25 +131,38 @@ export default function Page() {
                   </div>
 
                   <div className="flex flex-row lg:flex-col gap-4 w-full overflow-auto">
-                    {tabs.map((tab) => (
-                      <button
-                        key={tab.id}
-                        onClick={() => setActiveTab(tab.id)}
-                        className={`  cursor-pointer whitespace-nowrap rounded-full px-5 py-2 title-font tracking-header ${activeTab === tab.id
-                          ? "bg-(--primary) text-white"
-                          : "bg-gray-200 text-black"
-                          }`}
-                      >
-                        {tab.title}
-                      </button>
-                    ))}
-                    <button
-                      onClick={() => setConfrim(true)}
-                      className={` bg-gray-200 text-black cursor-pointer whitespace-nowrap  rounded-full px-5 py-2 title-font tracking-header `}
-                    >
-                      Log out
-                    </button>
-                  </div>
+      {tabs.map((tab) => (
+        <button
+          key={tab.id}
+          onClick={() => setActiveTab(tab.id)}
+          className={`flex items-center justify-between cursor-pointer whitespace-nowrap rounded-full px-5 py-2 title-font tracking-header ${
+            activeTab === tab.id
+              ? "bg-(--primary) text-white"
+              : "bg-gray-200 text-black"
+          }`}
+        >
+          <span>{tab.title}</span>
+          
+          {/* Badge logic */}
+          {tab.count > 0 && (
+            <div className={`ml-2 flex h-5 w-5 items-center justify-center rounded-full text-[10px] font-bold ${
+              activeTab === tab.id 
+                ? "bg-white text-(--primary)" 
+                : "bg-(--primary) text-white"
+            }`}>
+              {tab.count}
+            </div>
+          )}
+        </button>
+      ))}
+      
+      <button
+        onClick={() => setConfrim(true)}
+        className="bg-gray-200 text-black cursor-pointer whitespace-nowrap rounded-full px-5 py-2 title-font tracking-header"
+      >
+        Log out
+      </button>
+    </div>
                 </div>
                 {activeTab === 1 && (
                   <div className="flex-1 ">
@@ -261,8 +277,8 @@ export default function Page() {
                               {user.user.walletBalance.toLocaleString('en-NG')}
                             </h2>
                           </div>
-                          <button className="w-full px-5 py-3 title-font bg-black transition-all rounded-xl font-medium leading-[1.1] tracking-body text-sm text-white ">
-                            Request Withdraw
+                          <button disabled={user.user.walletBalance < 3000} onClick={()=>setBankModal(true)} className="w-full px-5 py-3 title-font bg-black transition-all rounded-xl font-medium leading-[1.1] tracking-body text-sm text-white disabled:opacity-50">
+                           {user.user.walletBalance < 3000 ?"Minimum Withdraw is NGN3,000" :"Request Withdraw"} 
                           </button>
                         </div>
                       </div>
@@ -284,7 +300,7 @@ export default function Page() {
                               {user.user.walletDebt.toLocaleString('en-NG')}
                             </h2>
                           </div>
-                          <button className="w-full px-5 py-3 title-font bg-black transition-all rounded-xl font-medium leading-[1.1] tracking-body text-sm text-white ">
+                          <button disabled={user.user.walletDebt==0} className="w-full px-5 py-3 title-font bg-black transition-all rounded-xl font-medium leading-[1.1] tracking-body text-sm text-white  disabled:opacity-50">
                             Pay Dept
                           </button>
                         </div>
@@ -292,21 +308,16 @@ export default function Page() {
 
                     </div>
                     {/* payout History */}
-                    <div className="flex-1 h-fit rounded-[30px] bg-(--card) border border-gray-200 p-1.5">
-                      <div className="py-2 px-5">
-                        <p className="text-base text-left leading-5 text-(--secondary) title-font">
-                          Recent Payouts
+                    <div className='flex flex-col gap-2'>
+                        <span className="text-(--secondary) leading-body tracking-body title-font ">
+                          Notice
+                        </span>
+                        <p className="text-(--secondary) p-4 bg-(--card) rounded-xl leading-body tracking-body title-font ">
+                         To ensure a reliable marketplace for all university students, Beegee maintains clear rules regarding withdrawals and user accountability. The minimum amount allowed for any withdrawal is ₦3,000. Once you request a payout, the process typically takes between 2 to 3 hours to complete. If your funds do not reflect in your bank account after this window, please contact our customer care team immediately for assistance.
+
+Platform integrity is our top priority, which is why we enforce a strict policy regarding outstanding balances. You must settle any existing debt, such as late fees or service charges, to maintain full access to the platform. If you are owing, your account will be restricted: you will not be able to buy, rent, or sell any products until the debt is cleared. By keeping your balance settled, you ensure a seamless experience and help maintain a trustworthy community for everyone on Beegee. 
                         </p>
                       </div>
-                      <div className="w-full h-fit p-5 bg-foreground items-center border border-gray-200 rounded-3xl justify-center flex flex-col gap-5">
-                        <div className="flex jusify-center min-h-50 w-fit items-center flex-row gap-2">
-                          <p className="text-base text-left leading-5 text-(--secondary) title-font">
-                            No Transaction Payouts
-                          </p>
-                        </div>
-
-                      </div>
-                    </div>
                     <div>
 
                     </div>
@@ -363,14 +374,7 @@ export default function Page() {
                                   {formatPrice(order.subtotal)}
                                 </td>
                                 <td className="relative px-6 py-4 whitespace-nowrap">
-                                  <span
-                                    className={`inline-flex rounded-md border px-2.5 py-0.5 text-xs font-medium title-font2 ${order.status === "paid"
-                                      ? "bg-green-50 text-green-700 border-green-200"
-                                      : "bg-blue-50 text-blue-700 border-blue-200"
-                                      }`}
-                                  >
-                                    Pending
-                                  </span>
+                                  <StatusBadge status={order.status} />
                                 </td>
                               </tr>
                             ))}
@@ -435,14 +439,7 @@ export default function Page() {
                                   {formatPrice(sale.subtotal)}
                                 </td>
                                 <td className="relative px-6 py-4 whitespace-nowrap">
-                                  <span
-                                    className={`inline-flex rounded-md border px-2.5 py-0.5 text-xs font-medium title-font2 ${sale.status === "paid"
-                                      ? "bg-green-50 text-green-700 border-green-200"
-                                      : "bg-blue-50 text-blue-700 border-blue-200"
-                                      }`}
-                                  >
-                                    Pending
-                                  </span>
+                                  <StatusBadge status={sale.status} />
                                 </td>
                               </tr>
                             ))}
@@ -478,6 +475,10 @@ export default function Page() {
           onClose={() => setOrderDetails(false)}
           orderDetails={selectedOrder}
         />}
+        <AddBankModal
+          isOpen={bankModal}
+          onClose={() => setBankModal(false)}
+        />
     </>
   )
 }

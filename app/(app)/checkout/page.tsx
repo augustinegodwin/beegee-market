@@ -12,14 +12,9 @@ import { useProductStore } from "@/app/store/products.store";
 import { useAuthStore } from "@/app/store/auth.store";
 import AuthRequiredPage from "@/app/components/utils/authpage";
 import EmptyCart from "@/app/components/utils/nocartIems";
-const formatPrice = (price: number) => {
-  return new Intl.NumberFormat('en-NG', {
-    style: 'currency',
-    currency: 'NGN',
-    minimumFractionDigits: 0,
-    maximumFractionDigits: 0,
-  }).format(price);
-};
+import { formatPrice } from "@/app/components/utils/formatPrice";
+
+
 
 export default function CheckoutPage() {
   const router = useRouter();

@@ -94,6 +94,7 @@ type OrderItem = {
   category: string
   price: number
   id: string
+  image: productImage[];
 }
 
 type OrderUser = {

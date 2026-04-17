@@ -1,6 +1,7 @@
 import cancel from '@/app/assets/images/cancel.svg';
 import SectionHeader from "../utils/sectionHeader";
 import Image from 'next/image';
+import bottle from "../../assets/images/bottle.jpg"
 export default function Hero() {
   return (
     <div className="w-full flex justify-center h-screen max-h-250 py-4 px-4 min-h-150 ">
@@ -19,6 +20,9 @@ export default function Hero() {
         buttonAction="/store"
         buttonValue="Shop Now"
       />
+     
+      {/* <div className="w-50 h-65 rounded-3xl bg-orange-600 -bottom-20 shadow-xl -rotate-20 border-6 border-white absolute"></div>
+      <div className="w-50 h-65 rounded-3xl bg-orange-600 -top-20 shadow-xl rotate-20 border-6 border-white absolute"></div> */}
       {/* <div className="fixed z-10 bg-black/75 w-full h-full p-0 lg:p-10">
         <div className="w-full h-full flex justify-center items-center">
           <div className="w-full max-w-250 bg-(--card) lg:rounded-[30px] h-fulllg:h-auto border border-gray-100 p-1.5">

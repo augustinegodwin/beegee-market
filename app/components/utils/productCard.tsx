@@ -8,11 +8,11 @@ export default function ProductCard( product:Product) {
   const router = useRouter();
   return (
     <div className="w-full flex flex-col gap-4">
-      <div className="w-full overflow-hidden image-curtain relative aspect-[0.882609/1] border-gray-200 bg-(--card) rounded-2xl ">
+      <div className="w-full overflow-hidden image-curtain relative aspect-[0.882609/1] border-gray-200 bg-(--card) rounded-xl ">
         <Image
           src={product.image[0].url}
           alt={product.title}
-          className="size-full relative  rounded-2xl object-cover"
+          className="size-full relative  rounded-xl object-cover"
           width={100}
           sizes="100vw"
           height={100}

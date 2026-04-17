@@ -68,6 +68,7 @@ export default function Page() {
   const [pModal, setPModal] = useState(false);
   const {user}=useAuthStore()
   const router = useRouter();
+  const [productsfiltered,setProductsFiltered]=useState([])
   const shuffleArray = (array: any[]) => {
   return [...array].sort(() => Math.random() - 0.5);
 };
@@ -100,7 +101,7 @@ export default function Page() {
     });
     // mainproducts as dependency ensures it reshuffles only when fresh data arrives
   }, [mainproducts, activeCategory, isForSale]);
-
+  
   return (
     <MaxWidthContainer>
       <div className="pt-18.75 w-full flex flex-col">
@@ -108,10 +109,10 @@ export default function Page() {
         <div className="w-full mt-10 py-25 p-5 bg-(--green) border rounded-3xl relative border-gray-200">
           <div className="w-full flex justify-center text-center">
             <div className="w-full items-center justify-center max-w-150 flex flex-col gap-5">
-            <h2 className="tt  text-[40px] sm:text-5xl lg:text-[65px] text-white leading-none tracking-header uppercase">
-                MARKETPLACE
+            <h2 className="custom4  text-[40px] sm:text-5xl lg:text-[65px] text-white leading-none tracking-header">
+                Marketplace
               </h2>
-              <p className="text-lg text-white/75 tt font-medium tracking-body">
+              <p className="text-lg text-white/75 custom3 font-medium tracking-body">
                 HOME / STORE
               </p>
             </div>
@@ -123,11 +124,11 @@ export default function Page() {
           <div className="w-full flex justify-between items-center gap-5 flex-row">
             
             {/* 1. Category Dropdown (Responsive) */}
-            <div className="relative w-fit max-w-64">
+            <div className="relative w-fit">
               <select
                 value={activeCategory}
                 onChange={(e) => setActiveCategory(e.target.value)}
-                className="w-full appearance-none bg-(--card) border border-gray-200 rounded-xl px-5 py-2.5 title-font tracking-header text-(--secondary) focus:outline-none focus:ring-2 focus:ring-green-500 cursor-pointer"
+                className="w-full appearance-none bg-(--card) text-sm rounded-xl px-4 py-2 title-font tracking-header text-(--secondary) focus:outline-none focus:ring-2 focus:ring-green-500 cursor-pointer"
               >
                 {filterItems.map((item) => (
                   <option key={item.slug} value={item.slug}>
@@ -141,16 +142,16 @@ export default function Page() {
             </div>
 
             {/* 2. Buy/Sell Switch */}
-            <div className="w-fit flex items-center bg-gray-100 p-1 rounded-xl border border-gray-200">
+            <div className="w-fit flex items-center bg-gray-100 p-1 rounded-xl">
                <button 
                 onClick={() => setIsForSale(true)}
-                className={`px-6 py-1.5 rounded-lg text-sm title-font2 transition-all ${isForSale ? 'bg-black text-white shadow-sm' : 'text-gray-500 hover:text-black'}`}
+                className={`px-6 py-1 rounded-lg text-sm title-font2 transition-all ${isForSale ? 'bg-black text-white shadow-sm' : 'text-gray-500 hover:text-black'}`}
                >
                  Buy
                </button>
                <button 
                 onClick={() => setIsForSale(false)}
-                className={`px-6 py-1.5 rounded-lg text-sm title-font2 transition-all ${!isForSale ? 'bg-black text-white shadow-sm' : 'text-gray-500 hover:text-black'}`}
+                className={`px-6 py-1 rounded-lg text-sm title-font2 transition-all ${!isForSale ? 'bg-black text-white shadow-sm' : 'text-gray-500 hover:text-black'}`}
                >
                  Rent
                </button>
@@ -180,7 +181,7 @@ export default function Page() {
             </div>
           )}
 
-          {!loading && error && !mainproducts && (
+          {!loading && error && !filteredProducts.length && (
             <div className="py-25">
               <NetworkEror />
             </div>

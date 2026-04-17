@@ -9,50 +9,69 @@ import { useProductStore } from "@/app/store/products.store";
 import { redirect } from "next/navigation";
 import Link from "next/link";
 import { useAuthStore } from "@/app/store/auth.store";
+import { OrderStateButton } from "./orderStateButton";
+import OrderTimeline from "./timeline";
+import { formatPrice } from "./formatPrice";
+import { StatusBadge } from "./statusBadge";
+
 interface OrderDetailsModalProps {
     isOpen: boolean;
     onClose: () => void;
     orderDetails: OrderDetails;
 }
-const orderState = (user: User, order: OrderDetails) => {
-    const status = order.status //
-    const frsale = order.forSale
-    const iamSeler = user._id === order.user._id
-    // if i am the sller
-        // if product iis for sale
-            // if iam the seller and order was created click delivered
-            // if i am the seller and its was deleivered awaiting confrimation from user
-            // if i am the seller and the item was confrimed order completed or no oder to display seff
-        //    mone enters my account
-    // if i am the customer 
-        // if product is for sale 
-            // if i am the customer and i have made the order  'awaiting delevery'
-            // if i am the user and the seller has delivered "order completed"
+const OrderState = (user: User, order: OrderDetails) => {
+  const status = order.status;
+  const isSale = order.forSale;
+  const isSeller = user._id === order.user._id;
+  const isCustomer = user._id === order.renter._id;
 
+  let buttonText = "";
+  let isDisabled = false;
+  let onClickAction = () => {}; // Hook this up to your update functions
 
-            
-    // if i am the seller or the person who uplooaded the product for rent
-        // if product iis for rent
-            // if iam the admin and order was created click delivered
-            // if i am the admin and its was deleivered awaiting confrimation from user
-            // if i am the admin and the item was confrimed "awiting return from customer"
-            // if i am the admin and customer has clicked returnED  "COMPLETE ORDER"
-            // IF Iam the admin and i click order completed then we are done
-    // if i am the customer 
-        // if product is for rent 
-            // if i am the customer and i have made the order  'awaiting delevery'
-            // if i am the user and the product was delevered 'recieved"
-            // if i a he user and i click recieved then "return"
-            // if i am the user and i have clicked returned awaiting cnfrimation from seller"
-        // note all this place where we need to await the button should be disabked 
+  // --- FOR SALE FLOW ---
+  if (isSale) {
+    if (isSeller) {
+      if (status === "paid") buttonText = "Mark as Delivered";
+      else if (status === "delivered") { buttonText = "Awaiting Confirmation"; isDisabled = true; }
+      else if (status === "completed") { buttonText = "Order Completed"; isDisabled = true; }
+    } 
+    else if (isCustomer) {
+      if (status === "paid") { buttonText = "Awaiting Delivery"; isDisabled = true; }
+      else if (status === "delivered") buttonText = "Confirm Receipt";
+      else if (status === "completed") { buttonText = "Order Completed"; isDisabled = true; }
+    }
+  } 
 
-        // "this is the button that will be clicked based o each stages bth for seller or renter and customer"
-    return (
-        <button className="flex-1 flex gap-2 disabled:opacity-60 justify-center items-center px-5 h-10 title-font2 text-white cursor-pointer bg-black transition-all rounded-xl font-medium leading-[1.1] tracking-body text-sm">
-            Complete Order
-        </button>
-    )
-}
+  // --- FOR RENT FLOW ---
+  else {
+    if (isSeller) {
+      if (status === "paid") buttonText = "Mark as Delivered";
+      else if (status === "delivered") { buttonText = "Awaiting Customer Receipt"; isDisabled = true; }
+      else if (status === "return") buttonText = "Confirm Return & Complete";
+      else if (status === "completed") { buttonText = "Order Completed"; isDisabled = true; }
+    } 
+    else if (isCustomer) {
+      if (status === "paid") { buttonText = "Awaiting Delivery"; isDisabled = true; }
+      else if (status === "delivered") buttonText = "Mark as Received";
+      else if (status === "return") { buttonText = "Awaiting Seller Confirmation"; isDisabled = true; }
+      else if (status === "completed") { buttonText = "Order Completed"; isDisabled = true; }
+    }
+  }
+
+  // Fallback if no state matches
+  if (!buttonText) return null;
+
+  return (
+    <button 
+      disabled={isDisabled}
+      onClick={onClickAction}
+      className="flex-1 flex gap-2 disabled:opacity-60 justify-center items-center px-5 h-10 title-font2 text-white cursor-pointer bg-black transition-all rounded-xl font-medium leading-[1.1] tracking-body text-sm"
+    >
+      {buttonText}
+    </button>
+  );
+};
 export function OrderDetailsModal({ isOpen, onClose, orderDetails }: OrderDetailsModalProps) {
     const [quantity, setQuantity] = useState(1);
     const { user,getCookie } = useAuthStore()
@@ -98,25 +117,25 @@ export function OrderDetailsModal({ isOpen, onClose, orderDetails }: OrderDetail
                                     <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-20">
                                         <div className="flex flex-col gap-5">
                                             <div className="relative hidden lg:flex w-full aspect-square lg:aspect-[0.92/1] bg-gray-200 rounded-2xl overflow-hidden">
-                                                {/* <Image
-                          src={orderDetails.item}
-                          alt={selectedProduct.title}
- sizes="100vw"
-                          width={100}
-                          height={100}
-                          className="w-full h-full rounded-2xl object-cover"
-                        /> */}
+                                                <Image
+                                                        src={orderDetails.item.image[0].url}
+                                                        alt={orderDetails.item.title}
+                                sizes="100vw"
+                                                        width={100}
+                                                        height={100}
+                                                        className="w-full h-full rounded-2xl object-cover"
+                                                        />
                                             </div>
                                             <div className='w-full h-30 py-2'>
                                                 <div className="h-full rounded-2xl flex justify-center outline-2 outline-green-600 aspect-square">
-                                                    {/* <Image
-                            src={orderDetails.item}
-                            alt={selectedProduct.title}
+                                                    <Image
+                            src={orderDetails.item.image[0].url}
+                             alt={orderDetails.item.title}
                              sizes="100vw"           
                             width={100}
                             height={100}
                             className="w-full h-full border-3 border-transparent rounded-2xl object-cover"
-                          /> */}
+                          />
                                                 </div>
                                             </div>
                                         </div>
@@ -127,14 +146,10 @@ export function OrderDetailsModal({ isOpen, onClose, orderDetails }: OrderDetail
                                                     <p className="text-black text-lg leading-body tracking-body custom3 ">
                                                         Order #{orderDetails._id}
                                                     </p>
-                                                    <span
-                                                        className={`inline-flex rounded-md border px-2.5 py-0.5 text-xs leading-body font-medium title-font2 bg-green-50 text-green-700 border-green-200`}
-                                                    >
-                                                        {orderDetails.status}
-                                                    </span>
+                                                    <StatusBadge status={orderDetails.status} />
                                                 </div>
                                                 <p className="text-(--secondary) inline-flex text-sm leading-body tracking-body title-font ">
-                                                    Oct 29,2026 <Dot size={14} /> N{orderDetails.subtotal}
+                                                    Oct 29,2026 <Dot size={14} /> {formatPrice(orderDetails.subtotal)}
                                                 </p>
                                             </div>
                                             <div className='flex flex-col gap-4'>
@@ -143,10 +158,19 @@ export function OrderDetailsModal({ isOpen, onClose, orderDetails }: OrderDetail
                                                 </span>
                                                 <div className="w-full flex gap-5 flex-col">
                                                     <div className="w-full flex gap-5 items-center">
-                                                        <div className="aspect-square h-15 rounded-2xl bg-gray-100"></div>
+                                                        <div className="aspect-square overflow-hidden h-15 rounded-2xl bg-gray-100">
+                                                             <Image
+                            src={orderDetails.item.image[0].url}
+                             alt={orderDetails.item.title}
+                             sizes="100vw"           
+                            width={100}
+                            height={100}
+                            className="w-full h-full border-3 border-transparent rounded-2xl object-cover"
+                          />
+                                                        </div>
                                                         <div className="flex-1 flex flex-col gap-1">
                                                             <span className="text-black line-clamp-2 leading-body tracking-body title-font ">
-                                                                JBL MG-S20 TWS Bluetooth Earbuds with Digital Display Charging Case
+                                                                {orderDetails.item.title}
 
                                                             </span>
                                                             <p className="text-(--secondary) inline-flex items-center text-sm leading-body tracking-body title-font ">
@@ -160,7 +184,7 @@ export function OrderDetailsModal({ isOpen, onClose, orderDetails }: OrderDetail
                                                                 Subtotal
                                                             </span>
                                                             <span className="text-black inline-flex text-sm leading-body tracking-body title-font ">
-                                                                N{orderDetails.subtotal}
+                                                                {formatPrice(orderDetails.subtotal)}
                                                             </span>
 
                                                         </div>
@@ -169,7 +193,7 @@ export function OrderDetailsModal({ isOpen, onClose, orderDetails }: OrderDetail
                                                                 Shipping fee
                                                             </span>
                                                             <span className="text-black inline-flex text-sm leading-body tracking-body title-font ">
-                                                                N350.00
+                                                                {formatPrice(350.00)}
                                                             </span>
 
                                                         </div>
@@ -178,14 +202,44 @@ export function OrderDetailsModal({ isOpen, onClose, orderDetails }: OrderDetail
                                                                 Total
                                                             </span>
                                                             <span className="text-black inline-flex text-sm leading-body tracking-body title-font ">
-                                                                N{orderDetails.subtotal + 350}
+                                                                {formatPrice(orderDetails.subtotal + 350)}
                                                             </span>
 
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div className='flex flex-col gap-4 border-t border-dashed border-gray-200 pt-5'>
+                                            {
+                                                orderDetails.user._id === user?.user._id ?<div className='flex flex-col gap-4 border-t border-dashed border-gray-200 pt-5'>
+                                                <span className="text-(--secondary) leading-body tracking-body title-font ">
+                                                    Customer / Buyer
+                                                </span>
+                                                <div className="w-full">
+                                                    <div className="w-full flex gap-5 items-center">
+                                                        <div className="aspect-square h-12 rounded-lg overflow-hidden bg-gray-100">
+                                                            <Image
+                                                                src={orderDetails.renter.profileImage}
+                                                                alt="Sellers icon"
+                                                                width={100}
+                                                                height={100}
+                                                                className="w-full h-full object-cover"
+                                                            />
+                                                        </div>
+                                                        <div className="flex-1 flex flex-col gap-1">
+                                                            <span className="text-black line-clamp-1 leading-body tracking-body title-font ">{orderDetails.renter.name} </span>
+                                                            <p className="text-(--secondary) inline-flex text-sm leading-body tracking-body title-font ">
+                                                                {orderDetails.renter.phoneNumber}
+                                                            </p>
+                                                        </div>
+                                                        <Link href={`tel:${orderDetails.renter.phoneNumber}`} className="aspect-square h-10 rounded-xl bg-blue-100 flex justify-center items-center">
+                                                            <Phone
+                                                                size={20}
+                                                                className="text-blue-600"
+                                                            />
+                                                        </Link>
+                                                    </div>
+                                                </div>
+                                            </div>:<div className='flex flex-col gap-4 border-t border-dashed border-gray-200 pt-5'>
                                                 <span className="text-(--secondary) leading-body tracking-body title-font ">
                                                     Seller / Renter
                                                 </span>
@@ -215,89 +269,8 @@ export function OrderDetailsModal({ isOpen, onClose, orderDetails }: OrderDetail
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div className='flex flex-col gap-4 border-t border-dashed border-gray-200 pt-5'>
-                                                <span className="text-(--secondary) leading-body tracking-body title-font ">
-                                                    Timeline
-                                                </span>
-                                                <div className="w-full flex flex-col">
-                                                    {/* STAGE 1 */}
-                                                    <div className="relative flex gap-5 items-start pb-8">
-                                                        {/* Connecting Line */}
-                                                        <div className="absolute left-5 top-10 w-[1px] h-full bg-gray-200" />
-
-                                                        <div className="relative z-10 aspect-square flex justify-center items-center h-10 rounded-full border border-gray-200 bg-white">
-                                                            <ShoppingBag className="text-orange-300" size={20} />
-                                                        </div>
-
-                                                        <div className="flex-1 flex flex-col gap-1">
-                                                            <span className="text-black line-clamp-1 leading-body tracking-body title-font">Order Confirmed</span>
-                                                            <p className="text-(--secondary) inline-flex text-xs leading-body tracking-body title-font">
-                                                                Order Placed and confirmed
-                                                            </p>
-                                                        </div>
-
-                                                        <div className="flex h-10 items-start">
-                                                            <p className="text-(--secondary) inline-flex text-sm leading-body tracking-body title-font">
-                                                                Oct 29, 2026
-                                                            </p>
-                                                        </div>
-                                                    </div>
-
-                                                    {/* STAGE 2 */}
-                                                    <div className="relative flex gap-5 items-start pb-8">
-                                                        {/* Connecting Line (Dashed to show progress to next) */}
-                                                        <div className="absolute left-5 top-10 w-[1px] h-full border-l border-dashed border-gray-300" />
-
-                                                        <div className="relative z-10 aspect-square flex justify-center items-center h-10 rounded-full border border-gray-200 bg-white">
-                                                            <Gift className="text-purple-300" size={20} />
-                                                        </div>
-
-                                                        <div className="flex-1 flex flex-col gap-1">
-                                                            <span className="text-black line-clamp-1 leading-body tracking-body title-font">Order Delivered</span>
-                                                            <p className="text-(--secondary) inline-flex text-xs leading-body tracking-body title-font">
-                                                                Order Delivered and received
-                                                            </p>
-                                                        </div>
-
-                                                        <div className="flex h-10 items-start">
-                                                            <p className="text-(--secondary) inline-flex text-sm leading-body tracking-body title-font">
-                                                                Nov 3, 2026
-                                                            </p>
-                                                        </div>
-                                                    </div>
-
-                                                    {/* STAGE 3 (Last Stage) */}
-                                                    <div className="relative flex gap-5 items-start">
-                                                        {/* No line needed after last child */}
-                                                        <div className="relative z-10 aspect-square flex justify-center items-center h-10 rounded-full border border-dashed border-gray-300 bg-gray-50">
-                                                            <Check className="text-gray-300" size={20} />
-                                                        </div>
-
-                                                        <div className="flex-1 flex flex-col gap-1">
-                                                            <span className="text-gray-400 line-clamp-1 leading-body tracking-body title-font italic">Order completed (pending)</span>
-                                                            <p className="text-gray-300 inline-flex text-xs leading-body tracking-body title-font">
-                                                                Waiting for final verification
-                                                            </p>
-                                                        </div>
-
-                                                        <div className="flex h-10 items-start">
-                                                            <p className="text-gray-300 inline-flex text-sm leading-body tracking-body title-font">
-                                                                -- --
-                                                            </p>
-                                                        </div>
-                                                    </div>
-
-                                                </div>
-                                                {/* Complete orer process */}
-                                                {
-                                                    orderDetails.user._id !== user?.user._id ?
-                                                        <div className="w-full mt-5 flex justify-end">
-                                                            <button className="flex-1 flex gap-2 disabled:opacity-60 justify-center items-center px-5 h-10 title-font2 text-white cursor-pointer bg-black transition-all rounded-xl font-medium leading-[1.1] tracking-body text-sm">
-                                                                Complete Order
-                                                            </button>
-                                                        </div> : <></>
-                                                }
-                                            </div>
+                                            }
+                                            {user?.user && orderDetails && <OrderTimeline user={user.user} order={orderDetails}/>}
                                         </div>
                                     </div>
                                 </div>

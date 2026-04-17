@@ -21,7 +21,7 @@ export default function AuthRequiredPage() {
       <div className="flex items-center justify-center gap-3">
         <Link href="/sign-in">
           <button className="flex items-center space-x-2 px-6 py-2 bg-black hover:opacity-80 rounded-xl transition-all active:scale-95">
-            <LogIn size={16} className="text-white" />
+            
             <span className="text-white tracking-body title-font2">Sign In</span>
           </button>
         </Link>

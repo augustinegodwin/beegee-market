@@ -136,7 +136,7 @@ export default function SignUpForm() {
                     <div className="size-15 rounded-full border border-gray-100 z-10 bg-white -top-7.5">
                         <Link href={'/'} className="flex justify-center items-center size-full">
                                             <Image
-                                            className="size-[50%]"
+                                            className="w-[45%] h-auto"
                                             alt="logo"
                                             src={logo}
                                         />
@@ -203,7 +203,7 @@ export default function SignUpForm() {
                                         <input className='hidden' type="file" ref={fileInputRef} onChange={handleImageChange} accept="image/*" />
                                         <div 
                                             onClick={() => fileInputRef.current?.click()} 
-                                            className="size-20 rounded-full border border-gray-100 overflow-hidden cursor-pointer hover:border-orange-200 transition-all"
+                                            className="size-20 rounded-full border-2 border-gray-100 overflow-hidden cursor-pointer hover:border-green-600 transition-all"
                                         >
                                             <Image
                                                 className="size-full object-cover"
@@ -253,7 +253,7 @@ export default function SignUpForm() {
                                      <button 
                                         type="button" 
                                         onClick={() => setShowMore(1)}
-                                        className="flex-1 text-sm font-medium text-(--secondary) hover:text-black transition-colors"
+                                        className="flex-1 text-sm tracking-body title-font2 text-(--secondary) hover:text-black transition-colors"
                                     >
                                         ← Edit basic info
                                     </button>

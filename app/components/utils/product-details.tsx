@@ -212,6 +212,7 @@ export function ProductModal() {
                             router.push("/checkout")
                             setSelectedProduct(null)
                             addToCart(selectedProduct,quantity)
+                            setQuantity(1)
                           }}
                           className="w-full bg-black py-2 cursor-pointer rounded-lg tracking-body leading-body transition-all custom3 font-medium hover:opacity-90 transition-opacity disabled:opacity-50 disabled:cursor-not-allowed"
                         >

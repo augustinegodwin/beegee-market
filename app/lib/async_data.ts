@@ -123,12 +123,11 @@ export const createOrder = async (paymentObj:any) => {
     return error    
   }
 };
-export const updateOrder = async (orderId:any,orderObject:OrderDetails) => {
+export const updateOrder = async (orderId:string,data:any) => {
   try {
     const request=await axiosInstance.post(`/v1/orders/Update/${orderId}`,{
-      orderId,
-      status,
-      signedCookies
+     
+      ...data
     })
     const response=await request
     return response
@@ -136,3 +135,21 @@ export const updateOrder = async (orderId:any,orderObject:OrderDetails) => {
     return error    
   }
 };
+
+export const requestPayout =async (
+ data:{ signedCookies:any,
+  amount: string | number, // or allow user input if you want
+  accountInformation: {
+    name: string,
+    number: string| number,
+    bank: string,
+  }},
+)=>{
+  try {
+    const request=await axiosInstance.post(`/v1/payouts/request`,data)
+     const response=await request
+    return response
+  } catch (error) {
+     return error    
+  }
+}
