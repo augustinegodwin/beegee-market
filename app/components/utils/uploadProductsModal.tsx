@@ -97,6 +97,8 @@ export function UploadProductModal({ isOpen, onClose }: UploadProductModalProps)
         setProductVerificationStep(1)
           setSuccess(true)
       setCreatedProduct(main?.newProduct || null)
+     }else{
+        setError(true)
      }
   } catch (error) {
     setError(true)
