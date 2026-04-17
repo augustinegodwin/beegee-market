@@ -20,23 +20,23 @@
 }
 @font-face {
   font-family: custom;
-    src: url(./assets/fonts/Boris.ttf)  ;    
+    src: url(./assets/fonts/Livvic/Livvic-Medium.ttf )  ;    
 } 
 @font-face {
   font-family: custom2;
-  src: url(./assets/fonts/static/BricolageGrotesque_48pt_SemiCondensed-Bold.ttf) ; 
+  src: url(./assets/fonts/Livvic/Livvic-SemiBold.ttf ) ; 
 } 
 @font-face {
   font-family: z;
-    src: url(./assets/fonts/Boris.ttf)  ;   
+    src: url(./assets/fonts/Livvic/Livvic-Bold.ttf)  ;   
 } 
 @font-face {
   font-family: ATWTTS;  
-  src: url(./assets/fonts/Boris.ttf );  
+  src: url(./assets/fonts/Livvic/Livvic-Medium.ttf );   
 }  
 @font-face {
   font-family: custom3;
-  src: url(./assets/fonts/Boris.ttf)  ; 
+  src: url(./assets/fonts/Livvic/Livvic-Medium.ttf)  ; 
 } 
 @font-face {  
   font-family: custom4;
@@ -51,7 +51,7 @@
 }
 @font-face {
   font-family: InterB;  
-    src: url(./assets/fonts/Boris.ttf)  ;   } 
+    src: url(./assets/fonts/Livvic/Livvic-Medium.ttf)  ;   } 
 .tt{
   font-family: custom2  ;
 }

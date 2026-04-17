@@ -147,7 +147,7 @@ export function ProductModal() {
                         <p className="text-(--secondary) leading-body tracking-body title-font ">
                           {selectedProduct.category}
                         </p>
-                        <h2 className="text-3xl tracking-[-0.02em] text-black custom4">
+                        <h2 className="text-3xl tracking-[-0.02em] text-black tt">
                           {selectedProduct.title}
                         </h2>
                       </div>
@@ -166,7 +166,7 @@ export function ProductModal() {
                           Price
                         </span>
                         <div className="flex items-baseline gap-4">
-                          <span className="text-4xl tracking-body custom4 text-black">
+                          <span className="text-4xl tracking-body tt text-black">
                             {formatPrice(total)}
                           </span>
                           {!selectedProduct.forSale && (

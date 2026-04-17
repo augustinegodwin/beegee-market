@@ -5,11 +5,11 @@ export default function TermsPage() {
   const lastUpdated = "January 2026";
 
   return (
-    <div className="min-h-screen bg-white text-black p-6 md:p-12 lg:p-20">
+    <div className="min-h-screen bg-white px-5 py-25 text-black">
       {/* Header Section */}
-      <header className="max-w-4xl mx-auto mb-16">
+      <header className="max-w-[1200px] mx-auto mb-16">
         <h1 className="text-4xl md:text-6xl font-black title-font tracking-tight mb-4">
-          Terms & <br />Conditions
+          Terms & Conditions
         </h1>
         <div className="flex items-center gap-2 text-zinc-400 font-bold tracking-widest text-xs uppercase">
           <span className="w-8 h-[1px] bg-zinc-300"></span>
@@ -17,7 +17,7 @@ export default function TermsPage() {
         </div>
       </header>
 
-      <main className="max-w-4xl mx-auto space-y-12">
+      <main className="max-w-[1200px] mx-auto space-y-12">
         
         {/* Section 1: Introduction */}
         <section>
@@ -38,9 +38,9 @@ export default function TermsPage() {
           <div className="space-y-4 text-zinc-600 title-font2 text-sm">
             <p>Primarily for university students (Minimum age: 15). Verification is <strong>mandatory</strong> and requires:</p>
             <ul className="grid grid-cols-1 md:grid-cols-2 gap-2 text-black font-semibold">
-              <li>• Student ID / School Clearance</li>
-              <li>• National Identification (NIN)</li>
-              <li>• Matric Number & Hostel Address</li>
+              <li>• Student Name</li>
+              <li>• Student University Level</li>
+              <li>• Mobile Phone Number</li>
               <li>• Personal Photograph</li>
             </ul>
             <div className="mt-4 p-4 bg-red-50 text-red-600 rounded-xl font-bold text-xs flex items-start gap-2">
