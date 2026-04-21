@@ -14,7 +14,7 @@ const testimonials = [
     status: "Renter"
   },
   {
-    message: "Lifesaver for cheap study materials! The process is fast and the deals are very student-friendly.",
+    message: "Lifesaver study materials! The process is fast and the deals are student-friendly.",
     user: "Blessing Ifeanyi",
     status: "Buyer"
   },
@@ -29,7 +29,7 @@ const testimonials = [
     status: "Lender"
   },
   {
-    message: "My go-to campus marketplace. I’ve secured great deals on electronics and books without any stress.",
+    message: "The campus marketplace. I’ve secured great deals on electronics without any stress.",
     user: "Emeka Nwosu",
     status: "Buyer & Seller"
   },
